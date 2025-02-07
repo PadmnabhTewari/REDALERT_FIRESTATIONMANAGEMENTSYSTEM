@@ -53,16 +53,36 @@ http://localhost:3000
 ## 📂 Project Structure  
 
 ```
-fire-station-management/
-│── src/
-│   ├── components/      # Reusable components (e.g., Navbar)
-│   ├── pages/           # Different pages (Home, Dashboard, Reports, etc.)
-│   ├── App.js           # Main app entry point
-│   ├── index.js         # Renders the app
-│── public/              # Static files
-│── package.json         # Dependencies & scripts
-│── README.md            # Documentation
-│── .gitignore           # Ignore unnecessary files
+FIRE-STATION-MANAGEMENT-SYSTEM/
+├── backend/
+├── frontend/
+│   ├── node_modules/
+│   ├── public/
+│   │   └── index.html
+│   └── src/
+│       ├── components/
+│       └── pages/
+│           ├── Dashboard.css
+│           ├── Dashboard.js
+│           ├── Home.css
+│           ├── Home.js
+│           ├── Login.css
+│           ├── Login.js
+│           ├── Report.css
+│           ├── Report.js
+│           ├── Reports.css
+│           ├── Reports.js
+│           ├── Settings.js
+│           ├── Staff.css
+│           ├── Staff.js
+│           ├── Vehicles.css
+│           └── Vehicles.js
+│       ├── App.css
+│       ├── App.js
+│       ├── index.css
+│       └── index.js
+└── ngrok-stable-linux-*
+
 ```
 
 ---
