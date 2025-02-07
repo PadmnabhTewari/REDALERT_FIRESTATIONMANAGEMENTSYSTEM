@@ -1,5 +1,3 @@
-Here's a **`README.md`** for your Fire Station Management System React project:  
-
 ---
 
 # 🚒 Fire Station Management System  
