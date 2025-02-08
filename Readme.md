@@ -138,8 +138,3 @@ This project is licensed under the **MIT License**.
 
 ## 💡 Need Help?  
 If you have any questions, feel free to open an issue or contact me. 🚒🔥  
-
----
-
-This **README.md** is now ready to be added to your project! 🚀  
-Let me know if you need any modifications. 😎
