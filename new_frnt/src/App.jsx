@@ -8,7 +8,7 @@ import Vehicles from './pages/Vehicles';
 import Staff from './pages/Staff';
 import Reports from './pages/Reports';
 import Login from './pages/Login';
-import Navbar from './components/NavBar';
+import Navbar from './components/Navbar';
 
 const App = () => {
   return (
