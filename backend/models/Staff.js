@@ -1,15 +1,18 @@
 const db = require('../config/db');
 
 class Staff {
-  static async findAll() {
-    const [rows] = await db.query('SELECT * FROM staff');
-    return rows;
+  static async create(staff) {
+    const { Name, Designation, Contact, Email, Station_ID, Shift } = staff;
+    const [result] = await db.query(
+      'INSERT INTO Staff (Name, Designation, Contact, Email, Station_ID, Shift) VALUES (?, ?, ?, ?, ?, ?)',
+      [Name, Designation, Contact, Email, Station_ID, Shift]
+    );
+    return result.insertId;
   }
 
-  static async create(staff) {
-    const { name, role, stationId } = staff;
-    const [result] = await db.query('INSERT INTO staff (name, role, station_id) VALUES (?, ?, ?)', [name, role, stationId]);
-    return result.insertId;
+  static async findAll() {
+    const [rows] = await db.query('SELECT * FROM Staff');
+    return rows;
   }
 }
 

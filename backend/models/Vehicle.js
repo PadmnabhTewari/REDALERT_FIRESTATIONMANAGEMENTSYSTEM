@@ -1,15 +1,18 @@
 const db = require('../config/db');
 
 class Vehicle {
-  static async findAll() {
-    const [rows] = await db.query('SELECT * FROM vehicles');
-    return rows;
+  static async create(vehicle) {
+    const { Type, Model_No, Status, Water_Capacity, Station_ID } = vehicle;
+    const [result] = await db.query(
+      'INSERT INTO Vehicle (Type, Model_No, Status, Water_Capacity, Station_ID) VALUES (?, ?, ?, ?, ?)',
+      [Type, Model_No, Status, Water_Capacity, Station_ID]
+    );
+    return result.insertId;
   }
 
-  static async create(vehicle) {
-    const { type, status, stationId } = vehicle;
-    const [result] = await db.query('INSERT INTO vehicles (type, status, station_id) VALUES (?, ?, ?)', [type, status, stationId]);
-    return result.insertId;
+  static async findAll() {
+    const [rows] = await db.query('SELECT * FROM Vehicle');
+    return rows;
   }
 }
 
