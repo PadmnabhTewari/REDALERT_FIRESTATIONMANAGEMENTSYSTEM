@@ -2,7 +2,7 @@ const express = require("express");
 const pool = require("../config/db");
 const router = express.Router();
 
-// 🚀 Get all reports
+//Get all reports
 router.get("/", async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT * FROM Report");
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// 🚀 Add a new report
+// Add a new report
 router.post("/", async (req, res) => {
   const {
     Street_Address,
@@ -28,13 +28,13 @@ router.post("/", async (req, res) => {
     Assigned_Staff,
   } = req.body;
 
-  // ✅ Ensure required fields are provided
+  // Ensure required fields are provided
   if (!Street_Address || !City || !State || !Pincode || !Description || !Severity_Level) {
     return res.status(400).json({ error: "⚠️ All required fields must be filled!" });
   }
 
   try {
-    // ✅ Insert report into database
+    // Insert report into database
     const [result] = await pool.query(
       `INSERT INTO Report (Street_Address, City, State, Pincode, Description, Severity_Level, User_ID, Admin_ID, Assigned_Vehicle, Assigned_Staff) 
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,

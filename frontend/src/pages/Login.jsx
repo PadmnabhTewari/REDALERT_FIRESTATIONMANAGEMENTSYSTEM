@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:5000/api/auth/login";
 
@@ -7,12 +8,16 @@ const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-
+  const navigate = useNavigate();
   const submitHandler = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post(API_URL, { userName, password });
+      if(response.status === 200) {
+        navigate("/dashboard");
+        
+      }
       setMessage(`✅ Login successful! Welcome, ${response.data.user}.`);
     } catch (error) {
       setMessage("❌ Login failed. Please check your credentials.");

@@ -2,7 +2,7 @@ const express = require("express");
 const pool = require("../config/db");
 const router = express.Router();
 
-// 🚀 Get dashboard statistics
+// Get dashboard statistics
 router.get("/", async (req, res) => {
   try {
     const [[{ fireStations }]] = await pool.query("SELECT COUNT(*) AS fireStations FROM FireStation");

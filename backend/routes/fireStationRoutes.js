@@ -2,7 +2,7 @@ const express = require("express");
 const pool = require("../config/db");
 const router = express.Router();
 
-// 🚀 Get all fire stations
+// Get all fire stations
 router.get("/", async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT * FROM FireStation");
@@ -13,11 +13,11 @@ router.get("/", async (req, res) => {
   }
 });
 
-// 🚀 Add a new fire station
+//Add a new fire station
 router.post("/", async (req, res) => {
   const { Name, Location, Contact_Number, Total_Staff, Total_Vehicles } = req.body;
 
-  // ✅ Ensure required fields are provided
+  //Ensure required fields are provided
   if (!Name || !Location || !Contact_Number) {
     return res.status(400).json({ error: "⚠️ Name, Location, and Contact Number are required!" });
   }
