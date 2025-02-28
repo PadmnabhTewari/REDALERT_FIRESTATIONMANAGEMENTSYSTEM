@@ -101,5 +101,4 @@ FIRE-STATION-MANAGEMENT-SYSTEM/
 | Settings    | `/settings`  | Configure stations, vehicles, and roles |
 
 
-## 💡 Need Help?  
-If you have any questions, feel free to open an issue or contact me. 🚒🔥  
+  
