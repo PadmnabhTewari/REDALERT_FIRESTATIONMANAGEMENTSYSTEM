@@ -25,24 +25,24 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">🔥 Fire Station Dashboard</h1>
+    <div className="p-6 bg-gray-900 min-h-screen text-white">
+      <h1 className="text-3xl font-bold mb-6 text-pink-400">🔥 Fire Station Dashboard</h1>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-blue-100 p-6 rounded-lg shadow-md text-center">
-          <h2 className="text-xl font-semibold">Total Fire Stations</h2>
-          <p className="text-4xl font-bold">{stats.fireStations}</p>
+        <div className="bg-gray-800 p-6 rounded-lg shadow-md text-center">
+          <h2 className="text-xl font-semibold text-pink-300">Total Fire Stations</h2>
+          <p className="text-4xl font-bold text-white">{stats.fireStations}</p>
         </div>
-        <div className="bg-green-100 p-6 rounded-lg shadow-md text-center">
-          <h2 className="text-xl font-semibold">Total Vehicles</h2>
-          <p className="text-4xl font-bold">{stats.vehicles}</p>
+        <div className="bg-gray-800 p-6 rounded-lg shadow-md text-center">
+          <h2 className="text-xl font-semibold text-green-300">Total Vehicles</h2>
+          <p className="text-4xl font-bold text-white">{stats.vehicles}</p>
         </div>
-        <div className="bg-yellow-100 p-6 rounded-lg shadow-md text-center">
-          <h2 className="text-xl font-semibold">Total Staff</h2>
-          <p className="text-4xl font-bold">{stats.staff}</p>
+        <div className="bg-gray-800 p-6 rounded-lg shadow-md text-center">
+          <h2 className="text-xl font-semibold text-yellow-300">Total Staff</h2>
+          <p className="text-4xl font-bold text-white">{stats.staff}</p>
         </div>
-        <div className="bg-red-100 p-6 rounded-lg shadow-md text-center">
-          <h2 className="text-xl font-semibold">Total Reports</h2>
-          <p className="text-4xl font-bold">{stats.reports}</p>
+        <div className="bg-gray-800 p-6 rounded-lg shadow-md text-center">
+          <h2 className="text-xl font-semibold text-red-400">Total Reports</h2>
+          <p className="text-4xl font-bold text-white">{stats.reports}</p>
         </div>
       </div>
     </div>

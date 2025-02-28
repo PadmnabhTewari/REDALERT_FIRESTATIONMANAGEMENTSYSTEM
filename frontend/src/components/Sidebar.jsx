@@ -2,14 +2,34 @@ import React from 'react';
 
 const Sidebar = () => {
   return (
-    <div className="bg-gray-800 text-white w-64 min-h-screen p-4">
-      <h2 className="text-xl font-bold mb-4">Menu</h2>
-      <ul className="space-y-2">
-        <li><a href="/dashboard" className="hover:text-gray-400">Dashboard</a></li>
-        <li><a href="/fire-stations" className="hover:text-gray-400">Fire Stations</a></li>
-        <li><a href="/vehicles" className="hover:text-gray-400">Vehicles</a></li>
-        <li><a href="/staff" className="hover:text-gray-400">Staff</a></li>
-        <li><a href="/reports" className="hover:text-gray-400">Reports</a></li>
+    <div className="bg-gray-900 text-white w-64 min-h-screen p-6 shadow-lg">
+      <h2 className="text-2xl font-bold text-pink-400 mb-6">🔥 Fire Station</h2>
+      <ul className="space-y-3">
+        <li>
+          <a href="/dashboard" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
+            📊 Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="/fire-stations" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
+            🚒 Fire Stations
+          </a>
+        </li>
+        <li>
+          <a href="/vehicles" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
+            🚗 Vehicles
+          </a>
+        </li>
+        <li>
+          <a href="/staff" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
+            👨‍🚒 Staff
+          </a>
+        </li>
+        <li>
+          <a href="/reports" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
+            📄 Reports
+          </a>
+        </li>
       </ul>
     </div>
   );

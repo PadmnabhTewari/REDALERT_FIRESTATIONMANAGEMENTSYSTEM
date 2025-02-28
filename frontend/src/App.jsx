@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
-import Footer from './components/Footer';
 import Dashboard from './pages/Dashboard';
 import FireStations from './pages/FireStations';
 import Vehicles from './pages/Vehicles';
@@ -29,7 +28,6 @@ const App = () => {
             </Routes>
           </div>
         </div>
-        <Footer />
       </div>
     </Router>
   );
