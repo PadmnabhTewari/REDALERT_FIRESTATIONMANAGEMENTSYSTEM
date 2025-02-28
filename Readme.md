@@ -100,41 +100,6 @@ FIRE-STATION-MANAGEMENT-SYSTEM/
 | Reports     | `/reports`   | View fire incident records |
 | Settings    | `/settings`  | Configure stations, vehicles, and roles |
 
----
-
-## 🎨 UI Preview  
-
-🔥 **Dark Red Theme with Animations**  
-![Home Page](https://source.unsplash.com/600x300/?firetruck)  
-📊 **Dashboard Overview**  
-![Dashboard](https://source.unsplash.com/600x300/?firefighter)  
-
----
-
-## 🤝 Contributing  
-Want to improve this project? Follow these steps:  
-
-1. **Fork the repository**  
-2. **Create a new branch:**  
-   ```sh
-   git checkout -b feature-branch
-   ```
-3. **Make your changes & commit:**  
-   ```sh
-   git commit -m "Added new feature"
-   ```
-4. **Push the changes:**  
-   ```sh
-   git push origin feature-branch
-   ```
-5. **Open a Pull Request (PR)**  
-
----
-
-## 📜 License  
-This project is licensed under the **MIT License**.  
-
----
 
 ## 💡 Need Help?  
 If you have any questions, feel free to open an issue or contact me. 🚒🔥  
