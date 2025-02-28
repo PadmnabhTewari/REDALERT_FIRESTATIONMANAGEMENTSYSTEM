@@ -15,6 +15,7 @@ Normalization:
 • 3NF: Yes, as there are no transitive dependencies.
 • BCNF: Yes, as the left side of every functional dependency is a superkey
 */
+
 -- Create Vehicle table
 CREATE TABLE Vehicle (
   Vehicle_ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -35,6 +36,48 @@ Normalization:
 • 2NF: Yes, as there are no partial dependencies.
 • 3NF: Yes, as there are no transitive dependencies.
 • BCNF: Yes, as the left side of every functional dependency is a superkey
+*/
+
+-- Create Supplier table
+CREATE TABLE Supplier (
+  Supplier_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Name VARCHAR(255) NOT NULL,
+  Contact VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Address VARCHAR(255) NOT NULL,
+  Item_Provided VARCHAR(255) NOT NULL
+);
+/*
+Functional Dependencies:
+• Supplier ID → Name, Contact, Email, Address, Item Provided
+Normalization:
+• 1NF: Yes, as all attributes are atomic.
+• 2NF: Yes, as there are no partial dependencies.
+• 3NF: Yes, as there are no transitive dependencies.
+• BCNF: Yes, as the left side of every functional dependency is a superkey.
+*/
+
+-- Create Inventory table
+CREATE TABLE Inventory (
+  Inventory_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Item_Name VARCHAR(255) NOT NULL,
+  Quantity INT NOT NULL,
+  Station_ID INT,
+  Supplier_ID INT,
+  Last_Updated DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID),
+  FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID)
+);
+/*
+Functional Dependencies:
+• Inventory ID → Item Name, Quantity, Station ID, Supplier ID, Last Updated
+• Station ID → (from FireStation table)
+• Supplier ID → (from Supplier table)
+Normalization:
+• 1NF: Yes, as all attributes are atomic.
+• 2NF: Yes, as there are no partial dependencies.
+• 3NF: Yes, as there are no transitive dependencies.
+• BCNF: Yes, as the left side of every functional dependency is a superkey.
 */
 
 -- Create Staff table
@@ -70,7 +113,6 @@ CREATE TABLE User (
   Email VARCHAR(255) NOT NULL,
   Address VARCHAR(255) NOT NULL
 );
-
 /*
 Functional Dependencies:
 • User ID → Name, Username, Password, Contact, Email, Address
@@ -123,7 +165,6 @@ CREATE TABLE Report (
   FOREIGN KEY (Assigned_Vehicle) REFERENCES Vehicle(Vehicle_ID),
   FOREIGN KEY (Assigned_Staff) REFERENCES Staff(Staff_ID)
 );
-
 /*Functional Dependencies:
 • Report ID → Street Address, City, State, Pincode, Description, Report Date Time, Severity Level,
 User ID, Action Taken, Action Date Time, Admin ID, Assigned Vehicle, Assigned Staff
@@ -131,49 +172,6 @@ User ID, Action Taken, Action Date Time, Admin ID, Assigned Vehicle, Assigned St
 • Admin ID → (from Admin table)
 • Assigned Vehicle → (from Vehicle table)
 • Assigned Staff → (from Staff table)
-Normalization:
-• 1NF: Yes, as all attributes are atomic.
-• 2NF: Yes, as there are no partial dependencies.
-• 3NF: Yes, as there are no transitive dependencies.
-• BCNF: Yes, as the left side of every functional dependency is a superkey.
-*/
-
--- Create Inventory table
-CREATE TABLE Inventory (
-  Inventory_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Item_Name VARCHAR(255) NOT NULL,
-  Quantity INT NOT NULL,
-  Station_ID INT,
-  Supplier_ID INT,
-  Last_Updated DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID),
-  FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID)
-);
-/*
-Functional Dependencies:
-• Inventory ID → Item Name, Quantity, Station ID, Supplier ID, Last Updated
-• Station ID → (from FireStation table)
-• Supplier ID → (from Supplier table)
-Normalization:
-• 1NF: Yes, as all attributes are atomic.
-• 2NF: Yes, as there are no partial dependencies.
-• 3NF: Yes, as there are no transitive dependencies.
-• BCNF: Yes, as the left side of every functional dependency is a superkey.
-*/
-
--- Create Supplier table
-CREATE TABLE Supplier (
-  Supplier_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Name VARCHAR(255) NOT NULL,
-  Contact VARCHAR(255) NOT NULL,
-  Email VARCHAR(255) NOT NULL,
-  Address VARCHAR(255) NOT NULL,
-  Item_Provided VARCHAR(255) NOT NULL
-);
-
-/*
-Functional Dependencies:
-• Supplier ID → Name, Contact, Email, Address, Item Provided
 Normalization:
 • 1NF: Yes, as all attributes are atomic.
 • 2NF: Yes, as there are no partial dependencies.
@@ -224,6 +222,7 @@ Normalization:
 • 3NF: Yes, as there are no transitive dependencies.
 • BCNF: Yes, as the left side of every functional dependency is a superkey.
 */
+
 -- Create FuelLog table
 CREATE TABLE FuelLog (
   Fuel_ID INT AUTO_INCREMENT PRIMARY KEY,
