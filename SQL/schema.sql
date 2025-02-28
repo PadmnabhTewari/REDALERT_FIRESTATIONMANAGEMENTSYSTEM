@@ -20,6 +20,28 @@ CREATE TABLE Vehicle (
   FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID)
 );
 
+-- Create Supplier table
+CREATE TABLE Supplier (
+  Supplier_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Name VARCHAR(255) NOT NULL,
+  Contact VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Address VARCHAR(255) NOT NULL,
+  Item_Provided VARCHAR(255) NOT NULL
+);
+
+-- Create Inventory table
+CREATE TABLE Inventory (
+  Inventory_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Item_Name VARCHAR(255) NOT NULL,
+  Quantity INT NOT NULL,
+  Station_ID INT,
+  Supplier_ID INT,
+  Last_Updated DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID),
+  FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID)
+);
+
 -- Create Staff table
 CREATE TABLE Staff (
   Staff_ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -75,28 +97,6 @@ CREATE TABLE Report (
   FOREIGN KEY (Assigned_Staff) REFERENCES Staff(Staff_ID)
 );
 
--- Create Inventory table
-CREATE TABLE Inventory (
-  Inventory_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Item_Name VARCHAR(255) NOT NULL,
-  Quantity INT NOT NULL,
-  Station_ID INT,
-  Supplier_ID INT,
-  Last_Updated DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID),
-  FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID)
-);
-
--- Create Supplier table
-CREATE TABLE Supplier (
-  Supplier_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Name VARCHAR(255) NOT NULL,
-  Contact VARCHAR(255) NOT NULL,
-  Email VARCHAR(255) NOT NULL,
-  Address VARCHAR(255) NOT NULL,
-  Item_Provided VARCHAR(255) NOT NULL
-);
-
 -- Create EquipmentUsage table
 CREATE TABLE EquipmentUsage (
   Usage_ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -129,3 +129,4 @@ CREATE TABLE FuelLog (
   Cost DECIMAL(10, 2) NOT NULL,
   FOREIGN KEY (Vehicle_ID) REFERENCES Vehicle(Vehicle_ID)
 );
+
