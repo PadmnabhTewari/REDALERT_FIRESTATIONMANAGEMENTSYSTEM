@@ -12,7 +12,6 @@ CREATE TABLE FireStation (
 CREATE TABLE Vehicle (
   Vehicle_ID INT AUTO_INCREMENT PRIMARY KEY,
   Type VARCHAR(255) NOT NULL,
-  Model_No VARCHAR(255) NOT NULL,
   Status VARCHAR(255) NOT NULL,
   Water_Capacity INT,
   Station_ID INT,
