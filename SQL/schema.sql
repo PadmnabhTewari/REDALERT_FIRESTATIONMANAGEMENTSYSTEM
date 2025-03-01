@@ -8,17 +8,25 @@ CREATE TABLE FireStation (
   Total_Vehicles INT DEFAULT 0
 );
 
+--Create Model table
+CREATE TABLE Model (
+  Model_No VARCHAR(255) PRIMARY KEY,
+  Type VARCHAR(255) NOT NULL
+);
+
+
 -- Create Vehicle table
 CREATE TABLE Vehicle (
   Vehicle_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Type VARCHAR(255) NOT NULL,
   Model_No VARCHAR(255) NOT NULL,
   Status VARCHAR(255) NOT NULL,
   Water_Capacity INT,
   Station_ID INT,
   Last_Maintenance_Date DATETIME,
+  FOREIGN KEY (Model_No) REFERENCES Model(Model_No),
   FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID)
 );
+
 
 -- Create Supplier table
 CREATE TABLE Supplier (
@@ -74,6 +82,7 @@ CREATE TABLE Admin (
   Contact VARCHAR(255) NOT NULL,
   Role VARCHAR(255) NOT NULL
 );
+
 
 -- Create Report table
 CREATE TABLE Report (
