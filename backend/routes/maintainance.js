@@ -50,4 +50,4 @@ const Maintenance = () => {
   );
 };
 
-export default MaintenanceTable;
+export default Maintenance;
