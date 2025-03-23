@@ -2,10 +2,24 @@
 CREATE TABLE FireStation (
   Station_ID INT AUTO_INCREMENT PRIMARY KEY,
   Name VARCHAR(255) NOT NULL,
-  Location VARCHAR(255) NOT NULL,
-  Contact_Number VARCHAR(255) NOT NULL,
-  Total_Staff INT DEFAULT 0,
-  Total_Vehicles INT DEFAULT 0
+  Contact_Number VARCHAR(20) NOT NULL UNIQUE,
+  Total_Staff INT DEFAULT 0 CHECK (Total_Staff >= 0),
+  Total_Vehicles INT DEFAULT 0 CHECK (Total_Vehicles >= 0)
+);
+
+-- Create FireStationLocation table (3NF decomposition)
+CREATE TABLE FireStationLocation (
+  Location VARCHAR(255) PRIMARY KEY,
+  Station_ID INT UNIQUE,
+  FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID) ON DELETE CASCADE
+);
+
+-- Create VehicleModel table (3NF decomposition)
+CREATE TABLE VehicleModel (
+  Type VARCHAR(255) NOT NULL,
+  Model_No VARCHAR(255) NOT NULL,
+  Water_Capacity INT CHECK (Water_Capacity >= 0),
+  PRIMARY KEY (Type, Model_No)
 );
 
 -- Create Vehicle table
@@ -13,11 +27,11 @@ CREATE TABLE Vehicle (
   Vehicle_ID INT AUTO_INCREMENT PRIMARY KEY,
   Type VARCHAR(255) NOT NULL,
   Model_No VARCHAR(255) NOT NULL,
-  Status VARCHAR(255) NOT NULL,
-  Water_Capacity INT,
+  Status ENUM('Available', 'In Use', 'Under Maintenance') NOT NULL,
   Station_ID INT,
-  Last_Maintenance_Date DATETIME,
-  FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID)
+  Last_Maintenance_Date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (Type, Model_No) REFERENCES VehicleModel(Type, Model_No) ON DELETE CASCADE,
+  FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID) ON DELETE SET NULL
 );
 
 -- Create Supplier table
@@ -130,43 +144,3 @@ CREATE TABLE FuelLog (
   FOREIGN KEY (Vehicle_ID) REFERENCES Vehicle(Vehicle_ID)
 );
 
--- Triggers to update Total_Staff and Total_Vehicles dynamically
-DELIMITER //
-
-CREATE TRIGGER after_staff_insert
-AFTER INSERT ON Staff
-FOR EACH ROW
-BEGIN
-  UPDATE FireStation
-  SET Total_Staff = (SELECT COUNT(*) FROM Staff WHERE Station_ID = NEW.Station_ID)
-  WHERE Station_ID = NEW.Station_ID;
-END//
-
-CREATE TRIGGER after_vehicle_insert
-AFTER INSERT ON Vehicle
-FOR EACH ROW
-BEGIN
-  UPDATE FireStation
-  SET Total_Vehicles = (SELECT COUNT(*) FROM Vehicle WHERE Station_ID = NEW.Station_ID)
-  WHERE Station_ID = NEW.Station_ID;
-END//
-
-CREATE TRIGGER after_staff_delete
-AFTER DELETE ON Staff
-FOR EACH ROW
-BEGIN
-  UPDATE FireStation
-  SET Total_Staff = (SELECT COUNT(*) FROM Staff WHERE Station_ID = OLD.Station_ID)
-  WHERE Station_ID = OLD.Station_ID;
-END//
-
-CREATE TRIGGER after_vehicle_delete
-AFTER DELETE ON Vehicle
-FOR EACH ROW
-BEGIN
-  UPDATE FireStation
-  SET Total_Vehicles = (SELECT COUNT(*) FROM Vehicle WHERE Station_ID = OLD.Station_ID)
-  WHERE Station_ID = OLD.Station_ID;
-END//
-
-DELIMITER ;
