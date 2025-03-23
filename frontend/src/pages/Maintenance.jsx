@@ -41,7 +41,7 @@ const Maintenance = () => {
         Performed_By: performedBy,
       });
 
-      setMessage(✅ Maintenance record added for vehicle "${vehicleID}");
+      setMessage(`Maintenance record added for vehicle "${vehicleID}`);
       setVehicleID("");
       setMaintenanceType("");
       setDatePerformed("");
