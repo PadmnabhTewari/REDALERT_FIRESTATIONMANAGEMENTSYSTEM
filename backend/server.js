@@ -7,6 +7,9 @@ const reportRoutes = require("./routes/reportRoutes");
 const staffRoutes = require("./routes/staffRoutes");
 const vehicleRoutes = require("./routes/vehicleRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes"); // ✅ Add this
+const supplierRoutes = require('./routes/supplierRoutes');
+const maintenanceRoutes = require('./routes/maintenanceRoutes');
+const inventoryRoutes = require('./routes/inventoryRoutes');
 
 
 
@@ -25,6 +28,9 @@ app.use("/api/staff", staffRoutes);
 app.use("/api/vehicles", vehicleRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/fire-stations", fireStationRoutes);
+app.use('/api/suppliers', supplierRoutes);
+app.use('/api/maintenance', maintenanceRoutes);
+app.use('/api/inventory', inventoryRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => {

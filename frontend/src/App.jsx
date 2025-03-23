@@ -8,6 +8,10 @@ import Staff from './pages/Staff';
 import Reports from './pages/Reports';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
+import Inventory from './pages/Inventory';
+import Maintenance from './pages/Maintenance';
+import Supplier from './pages/Suppliers';
+
 
 const App = () => {
   return (
@@ -25,6 +29,9 @@ const App = () => {
               <Route path="/staff" element={<Staff />} />
               <Route path="/reports" element={<Reports />} /> 
               <Route path="/login" element={<Login />} />
+              <Route path="/inventory" element={<Inventory />} />
+              <Route path="/maintenance" element={<Maintenance />} />
+              <Route path="/suppliers" element={<Supplier />} />
             </Routes>
           </div>
         </div>

@@ -30,6 +30,21 @@ const Sidebar = () => {
             📄 Reports
           </a>
         </li>
+        <li>
+          <a href="/suppliers" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
+            📦 Suppliers
+          </a>
+        </li>
+        <li>
+          <a href="/inventory" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
+            🗃 Inventory
+          </a>
+        </li>
+        <li>
+          <a href="/maintenance" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
+            🛠 Maintenance
+          </a>
+        </li>
       </ul>
     </div>
   );
