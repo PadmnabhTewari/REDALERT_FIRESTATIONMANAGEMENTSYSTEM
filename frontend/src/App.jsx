@@ -9,7 +9,7 @@ import Reports from './pages/Reports';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Inventory from './pages/Inventory';
-import Maintainance from './pages/Maintainance';
+import Maintenance from './pages/Maintenance';
 import Supplier from './pages/Suppliers';
 
 
