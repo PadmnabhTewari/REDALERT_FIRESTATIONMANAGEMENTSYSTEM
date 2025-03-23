@@ -5,8 +5,9 @@ const API_URL = "http://localhost:5000/api/maintenance";
 
 const Maintenance = () => {
   const [maintenanceData, setMaintenanceData] = useState([]);
-  const [vehicleId, setVehicleId] = useState("");
+  const [vehicleID, setVehicleID] = useState("");
   const [maintenanceType, setMaintenanceType] = useState("");
+  const [datePerformed, setDatePerformed] = useState("");
   const [cost, setCost] = useState("");
   const [performedBy, setPerformedBy] = useState("");
   const [message, setMessage] = useState("");
@@ -24,22 +25,26 @@ const Maintenance = () => {
     }
   };
 
-  const addMaintenance = async (e) => {
+  const addMaintenanceRecord = async (e) => {
     e.preventDefault();
-    if (!vehicleId || !maintenanceType || !cost || !performedBy) {
-      setMessage("⚠️ Please fill in all required fields.");
+    if (!vehicleID || !maintenanceType || !datePerformed || !cost || !performedBy) {
+      setMessage("⚠ Please fill in all required fields.");
       return;
     }
+
     try {
       await axios.post(API_URL, {
-        Vehicle_ID: vehicleId,
+        Vehicle_ID: vehicleID,
         Maintenance_Type: maintenanceType,
-        Cost: cost,
+        Date_Performed: datePerformed,
+        Cost: parseFloat(cost),
         Performed_By: performedBy,
       });
-      setMessage(`✅ Maintenance record for Vehicle ID "${vehicleId}" added successfully!`);
-      setVehicleId("");
+
+      setMessage(✅ Maintenance record added for vehicle "${vehicleID}");
+      setVehicleID("");
       setMaintenanceType("");
+      setDatePerformed("");
       setCost("");
       setPerformedBy("");
       fetchMaintenanceData();
@@ -56,7 +61,7 @@ const Maintenance = () => {
       {message && <p className="bg-gray-800 text-pink-300 p-2 rounded mb-4">{message}</p>}
 
       <div className="bg-gray-800 shadow-lg rounded-lg p-4">
-        <h2 className="text-xl font-semibold mb-2 text-pink-300">Maintenance Records</h2>
+        <h2 className="text-xl font-semibold mb-2 text-pink-300">Registered Maintenance Records</h2>
         <table className="min-w-full bg-gray-700 text-white border border-gray-700">
           <thead>
             <tr className="bg-gray-600 text-pink-300">
@@ -93,12 +98,12 @@ const Maintenance = () => {
 
       <div className="bg-gray-800 shadow-lg rounded-lg p-4 mt-6">
         <h2 className="text-xl font-semibold mb-2 text-pink-300">Add New Maintenance Record</h2>
-        <form onSubmit={addMaintenance} className="space-y-3">
+        <form onSubmit={addMaintenanceRecord} className="space-y-3">
           <input
             type="text"
             placeholder="Vehicle ID"
-            value={vehicleId}
-            onChange={(e) => setVehicleId(e.target.value)}
+            value={vehicleID}
+            onChange={(e) => setVehicleID(e.target.value)}
             className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-400"
             required
           />
@@ -107,6 +112,13 @@ const Maintenance = () => {
             placeholder="Maintenance Type"
             value={maintenanceType}
             onChange={(e) => setMaintenanceType(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-400"
+            required
+          />
+          <input
+            type="date"
+            value={datePerformed}
+            onChange={(e) => setDatePerformed(e.target.value)}
             className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-400"
             required
           />
