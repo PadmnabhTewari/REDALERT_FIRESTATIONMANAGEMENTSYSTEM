@@ -130,3 +130,43 @@ CREATE TABLE FuelLog (
   FOREIGN KEY (Vehicle_ID) REFERENCES Vehicle(Vehicle_ID)
 );
 
+-- Triggers to update Total_Staff and Total_Vehicles dynamically
+DELIMITER //
+
+CREATE TRIGGER after_staff_insert
+AFTER INSERT ON Staff
+FOR EACH ROW
+BEGIN
+  UPDATE FireStation
+  SET Total_Staff = (SELECT COUNT(*) FROM Staff WHERE Station_ID = NEW.Station_ID)
+  WHERE Station_ID = NEW.Station_ID;
+END//
+
+CREATE TRIGGER after_vehicle_insert
+AFTER INSERT ON Vehicle
+FOR EACH ROW
+BEGIN
+  UPDATE FireStation
+  SET Total_Vehicles = (SELECT COUNT(*) FROM Vehicle WHERE Station_ID = NEW.Station_ID)
+  WHERE Station_ID = NEW.Station_ID;
+END//
+
+CREATE TRIGGER after_staff_delete
+AFTER DELETE ON Staff
+FOR EACH ROW
+BEGIN
+  UPDATE FireStation
+  SET Total_Staff = (SELECT COUNT(*) FROM Staff WHERE Station_ID = OLD.Station_ID)
+  WHERE Station_ID = OLD.Station_ID;
+END//
+
+CREATE TRIGGER after_vehicle_delete
+AFTER DELETE ON Vehicle
+FOR EACH ROW
+BEGIN
+  UPDATE FireStation
+  SET Total_Vehicles = (SELECT COUNT(*) FROM Vehicle WHERE Station_ID = OLD.Station_ID)
+  WHERE Station_ID = OLD.Station_ID;
+END//
+
+DELIMITER ;
