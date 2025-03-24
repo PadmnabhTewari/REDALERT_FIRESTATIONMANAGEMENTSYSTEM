@@ -1,0 +1,59 @@
+// dot 12.1.0 on Linux 6.13.8-200.fc41.x86_64
+// SchemaSpy rev 590
+digraph "innodb_lock_waits" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "innodb_lock_waits" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">innodb_lock_waits</TD></TR>
+      <TR><TD PORT="wait_started" COLSPAN="3" ALIGN="LEFT">wait_started</TD></TR>
+      <TR><TD PORT="wait_age" COLSPAN="3" ALIGN="LEFT">wait_age</TD></TR>
+      <TR><TD PORT="wait_age_secs" COLSPAN="3" ALIGN="LEFT">wait_age_secs</TD></TR>
+      <TR><TD PORT="locked_table" COLSPAN="3" ALIGN="LEFT">locked_table</TD></TR>
+      <TR><TD PORT="locked_table_schema" COLSPAN="3" ALIGN="LEFT">locked_table_schema</TD></TR>
+      <TR><TD PORT="locked_table_name" COLSPAN="3" ALIGN="LEFT">locked_table_name</TD></TR>
+      <TR><TD PORT="locked_table_partition" COLSPAN="3" ALIGN="LEFT">locked_table_partition</TD></TR>
+      <TR><TD PORT="locked_table_subpartition" COLSPAN="3" ALIGN="LEFT">locked_table_subpartition</TD></TR>
+      <TR><TD PORT="locked_index" COLSPAN="3" ALIGN="LEFT">locked_index</TD></TR>
+      <TR><TD PORT="locked_type" COLSPAN="3" ALIGN="LEFT">locked_type</TD></TR>
+      <TR><TD PORT="waiting_trx_id" COLSPAN="3" ALIGN="LEFT">waiting_trx_id</TD></TR>
+      <TR><TD PORT="waiting_trx_started" COLSPAN="3" ALIGN="LEFT">waiting_trx_started</TD></TR>
+      <TR><TD PORT="waiting_trx_age" COLSPAN="3" ALIGN="LEFT">waiting_trx_age</TD></TR>
+      <TR><TD PORT="waiting_trx_rows_locked" COLSPAN="3" ALIGN="LEFT">waiting_trx_rows_locked</TD></TR>
+      <TR><TD PORT="waiting_trx_rows_modified" COLSPAN="3" ALIGN="LEFT">waiting_trx_rows_modified</TD></TR>
+      <TR><TD PORT="waiting_pid" COLSPAN="3" ALIGN="LEFT">waiting_pid</TD></TR>
+      <TR><TD PORT="waiting_query" COLSPAN="3" ALIGN="LEFT">waiting_query</TD></TR>
+      <TR><TD PORT="waiting_lock_id" COLSPAN="3" ALIGN="LEFT">waiting_lock_id</TD></TR>
+      <TR><TD PORT="waiting_lock_mode" COLSPAN="3" ALIGN="LEFT">waiting_lock_mode</TD></TR>
+      <TR><TD PORT="blocking_trx_id" COLSPAN="3" ALIGN="LEFT">blocking_trx_id</TD></TR>
+      <TR><TD PORT="blocking_pid" COLSPAN="3" ALIGN="LEFT">blocking_pid</TD></TR>
+      <TR><TD PORT="blocking_query" COLSPAN="3" ALIGN="LEFT">blocking_query</TD></TR>
+      <TR><TD PORT="blocking_lock_id" COLSPAN="3" ALIGN="LEFT">blocking_lock_id</TD></TR>
+      <TR><TD PORT="blocking_lock_mode" COLSPAN="3" ALIGN="LEFT">blocking_lock_mode</TD></TR>
+      <TR><TD PORT="blocking_trx_started" COLSPAN="3" ALIGN="LEFT">blocking_trx_started</TD></TR>
+      <TR><TD PORT="blocking_trx_age" COLSPAN="3" ALIGN="LEFT">blocking_trx_age</TD></TR>
+      <TR><TD PORT="blocking_trx_rows_locked" COLSPAN="3" ALIGN="LEFT">blocking_trx_rows_locked</TD></TR>
+      <TR><TD PORT="blocking_trx_rows_modified" COLSPAN="3" ALIGN="LEFT">blocking_trx_rows_modified</TD></TR>
+      <TR><TD PORT="sql_kill_blocking_query" COLSPAN="3" ALIGN="LEFT">sql_kill_blocking_query</TD></TR>
+      <TR><TD PORT="sql_kill_blocking_connection" COLSPAN="3" ALIGN="LEFT">sql_kill_blocking_connection</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">view</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/innodb_lock_waits.html"
+    tooltip="innodb_lock_waits"
+  ];
+}

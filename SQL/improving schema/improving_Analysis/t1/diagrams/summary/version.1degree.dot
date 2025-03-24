@@ -1,0 +1,31 @@
+// dot 12.1.0 on Linux 6.13.8-200.fc41.x86_64
+// SchemaSpy rev 590
+digraph "version" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "version" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">version</TD></TR>
+      <TR><TD PORT="sys_version" COLSPAN="3" ALIGN="LEFT">sys_version</TD></TR>
+      <TR><TD PORT="mysql_version" COLSPAN="3" ALIGN="LEFT">mysql_version</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">view</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/version.html"
+    tooltip="version"
+  ];
+}

@@ -1,14 +1,44 @@
--- FireStation Table (With Status and Location)
+-- PincodeMapping Table (must come first as it's referenced by StationLocation)
+CREATE TABLE PincodeMapping (
+  Pincode INT PRIMARY KEY,
+  City VARCHAR(255) NOT NULL,
+  State VARCHAR(255) NOT NULL
+);
+
+-- StationLocation Table (depends on PincodeMapping)
+CREATE TABLE StationLocation (
+  Location_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Pincode INT NOT NULL,
+  Street_Address VARCHAR(255) NOT NULL,
+  Landmark VARCHAR(255),
+  Latitude DECIMAL(10, 8),
+  Longitude DECIMAL(11, 8),
+  UNIQUE (Pincode, Street_Address),
+  FOREIGN KEY (Pincode) REFERENCES PincodeMapping(Pincode)
+);
+
+-- FireStation Table (depends on StationLocation)
 CREATE TABLE FireStation (
   Station_ID INT AUTO_INCREMENT PRIMARY KEY,
   Name VARCHAR(255) NOT NULL,
-  Location VARCHAR(255) NOT NULL UNIQUE, -- ✅ Directly stored here
+  Location_ID INT NOT NULL,
   Contact_Number VARCHAR(20) NOT NULL UNIQUE,
-  Total_Staff INT DEFAULT 0 CHECK (Total_Staff >= 0),
-  Total_Vehicles INT DEFAULT 0 CHECK (Total_Vehicles >= 0),
-  Status ENUM('Active', 'Inactive') DEFAULT 'Active'
+  Status ENUM('Active', 'Inactive', 'Under Renovation') DEFAULT 'Active',
+  Establishment_Date DATE,
+  Capacity INT,
+  FOREIGN KEY (Location_ID) REFERENCES StationLocation(Location_ID)
 );
 
+-- FireStationContact Table (depends on FireStation)
+CREATE TABLE FireStationContact (
+  Contact_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Station_ID INT NOT NULL,
+  Contact_Type ENUM('Primary', 'Secondary', 'Emergency', 'Administrative') NOT NULL,
+  Contact_Value VARCHAR(50) NOT NULL,
+  FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID) ON DELETE CASCADE
+);
+
+-- VehicleModel Table (independent, comes before Vehicle)
 CREATE TABLE VehicleModel (
   Model_ID INT AUTO_INCREMENT PRIMARY KEY,
   Type ENUM('Fire Truck', 'Ambulance', 'Rescue Van', 'Water Tanker') NOT NULL,
@@ -16,6 +46,7 @@ CREATE TABLE VehicleModel (
   Water_Capacity INT CHECK (Water_Capacity >= 0) DEFAULT NULL  
 );
 
+-- Vehicle Table (depends on VehicleModel)
 CREATE TABLE Vehicle (
   Vehicle_ID INT AUTO_INCREMENT PRIMARY KEY,
   Model_ID INT NOT NULL,
@@ -23,7 +54,8 @@ CREATE TABLE Vehicle (
   Last_Maintenance_Date DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (Model_ID) REFERENCES VehicleModel(Model_ID) ON DELETE CASCADE
 );
--- FireStationVehicle Table (New: Many-to-Many relationship between FireStations and Vehicles)
+
+-- FireStationVehicle Table (depends on both FireStation and Vehicle)
 CREATE TABLE FireStationVehicle (
   Station_ID INT,
   Vehicle_ID INT,
@@ -32,7 +64,7 @@ CREATE TABLE FireStationVehicle (
   FOREIGN KEY (Vehicle_ID) REFERENCES Vehicle(Vehicle_ID) ON DELETE CASCADE
 );
 
--- Staff Table (ON DELETE CASCADE instead of SET NULL)
+-- Staff Table (depends on FireStation)
 CREATE TABLE Staff (
   Staff_ID INT AUTO_INCREMENT PRIMARY KEY,
   Name VARCHAR(255) NOT NULL,
@@ -43,34 +75,43 @@ CREATE TABLE Staff (
   FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID) ON DELETE CASCADE
 );
 
--- StaffShift Table (New: Tracks shift assignments dynamically)
+-- StaffShift Table (depends on Staff)
 CREATE TABLE StaffShift (
-  Shift_ID INT AUTO_INCREMENT PRIMARY KEY, -- ✅ Unique shift entry
+  Shift_ID INT AUTO_INCREMENT PRIMARY KEY,
   Staff_ID INT,
   Shift ENUM('Morning', 'Evening', 'Night') NOT NULL,
-  Shift_Date DATE NOT NULL, -- ✅ Track the date of the shift
+  Shift_Date DATE NOT NULL,
   FOREIGN KEY (Staff_ID) REFERENCES Staff(Staff_ID) ON DELETE CASCADE,
-  UNIQUE (Staff_ID, Shift, Shift_Date) -- ✅ Prevent duplicate shifts
+  UNIQUE (Staff_ID, Shift, Shift_Date)
 );
 
--- Supplier Table (Without Item_Provided, Normalized)
+-- Supplier Table (independent)
 CREATE TABLE Supplier (
   Supplier_ID INT AUTO_INCREMENT PRIMARY KEY,
   Name VARCHAR(255) NOT NULL,
-  Contact VARCHAR(255) NOT NULL,
-  Email VARCHAR(255) NOT NULL,
-  Address VARCHAR(255) NOT NULL
+  Contact_Phone VARCHAR(20) NOT NULL,
+  Email VARCHAR(255),
+  Address VARCHAR(255)
 );
 
--- SupplierItems Table (New: Normalized Supplier-Item Relationship)
-CREATE TABLE SupplierItems (
+-- Item Table (independent)
+CREATE TABLE Item (
+  Item_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Name VARCHAR(255) NOT NULL,
+  Category VARCHAR(100)
+);
+
+-- SupplierItem Table (depends on both Supplier and Item)
+CREATE TABLE SupplierItem (
   Supplier_ID INT,
-  Item_Name VARCHAR(255) NOT NULL,
-  PRIMARY KEY (Supplier_ID, Item_Name),
-  FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID) ON DELETE CASCADE
+  Item_ID INT,
+  Price DECIMAL(10,2),
+  PRIMARY KEY (Supplier_ID, Item_ID),
+  FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID) ON DELETE CASCADE,
+  FOREIGN KEY (Item_ID) REFERENCES Item(Item_ID) ON DELETE CASCADE
 );
 
--- Inventory Table (Same as before)
+-- Inventory Table (depends on FireStation and Supplier)
 CREATE TABLE Inventory (
   Inventory_ID INT AUTO_INCREMENT PRIMARY KEY,
   Item_Name VARCHAR(255) NOT NULL,
@@ -82,7 +123,7 @@ CREATE TABLE Inventory (
   FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID)
 );
 
--- EquipmentUsage Table (Same as before)
+-- EquipmentUsage Table (depends on Inventory and Staff)
 CREATE TABLE EquipmentUsage (
   Usage_ID INT AUTO_INCREMENT PRIMARY KEY,
   Inventory_ID INT,
@@ -94,7 +135,7 @@ CREATE TABLE EquipmentUsage (
   FOREIGN KEY (Staff_ID) REFERENCES Staff(Staff_ID)
 );
 
--- User Table (Same as before)
+-- User Table (independent)
 CREATE TABLE User (
   User_ID INT AUTO_INCREMENT PRIMARY KEY,
   Name VARCHAR(255) NOT NULL,
@@ -105,7 +146,7 @@ CREATE TABLE User (
   Address VARCHAR(255) NOT NULL
 );
 
--- Admin Table (Same as before)
+-- Admin Table (independent)
 CREATE TABLE Admin (
   Admin_ID INT AUTO_INCREMENT PRIMARY KEY,
   Name VARCHAR(255) NOT NULL,
@@ -115,16 +156,21 @@ CREATE TABLE Admin (
   Role VARCHAR(255) NOT NULL
 );
 
--- Report Table (Updated: Removed Assigned_Vehicle and Assigned_Staff)
+-- ReportLocation Table (independent)
+CREATE TABLE ReportLocation (
+  Pincode INT PRIMARY KEY,
+  City VARCHAR(255),
+  State VARCHAR(255)
+);
+
+-- Report Table (depends on User and Admin)
 CREATE TABLE Report (
   Report_ID INT AUTO_INCREMENT PRIMARY KEY,
   Street_Address VARCHAR(255) NOT NULL,
-  City VARCHAR(255) NOT NULL,
-  State VARCHAR(255) NOT NULL,
-  Pincode VARCHAR(255) NOT NULL,
+  Pincode INT NOT NULL,
   Description TEXT NOT NULL,
   Report_Date_Time DATETIME DEFAULT CURRENT_TIMESTAMP,
-  Severity_Level VARCHAR(255) NOT NULL,
+  Severity_Level ENUM('Low', 'Medium', 'High', 'Critical') NOT NULL,
   User_ID INT,
   Action_Taken TEXT,
   Action_Date_Time DATETIME,
@@ -133,7 +179,7 @@ CREATE TABLE Report (
   FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
 
--- ReportVehicle Table (New: Many-to-Many relationship between Reports and Vehicles)
+-- ReportVehicle Table (depends on Report and Vehicle)
 CREATE TABLE ReportVehicle (
   Report_ID INT,
   Vehicle_ID INT,
@@ -142,7 +188,7 @@ CREATE TABLE ReportVehicle (
   FOREIGN KEY (Vehicle_ID) REFERENCES Vehicle(Vehicle_ID) ON DELETE CASCADE
 );
 
--- ReportStaff Table (New: Many-to-Many relationship between Reports and Staff)
+-- ReportStaff Table (depends on Report and Staff)
 CREATE TABLE ReportStaff (
   Report_ID INT,
   Staff_ID INT,
@@ -151,7 +197,7 @@ CREATE TABLE ReportStaff (
   FOREIGN KEY (Staff_ID) REFERENCES Staff(Staff_ID) ON DELETE CASCADE
 );
 
--- Maintenance Table (Same as before)
+-- Maintenance Table (depends on Vehicle)
 CREATE TABLE Maintenance (
   Maintenance_ID INT AUTO_INCREMENT PRIMARY KEY,
   Vehicle_ID INT,
@@ -162,7 +208,7 @@ CREATE TABLE Maintenance (
   FOREIGN KEY (Vehicle_ID) REFERENCES Vehicle(Vehicle_ID)
 );
 
--- FuelLog Table (Same as before)
+-- FuelLog Table (depends on Vehicle)
 CREATE TABLE FuelLog (
   Fuel_ID INT AUTO_INCREMENT PRIMARY KEY,
   Vehicle_ID INT,
@@ -172,7 +218,7 @@ CREATE TABLE FuelLog (
   FOREIGN KEY (Vehicle_ID) REFERENCES Vehicle(Vehicle_ID)
 );
 
--- Triggers to update Total_Staff and Total_Vehicles dynamically
+-- Triggers (must come after all tables are created)
 DELIMITER //
 
 CREATE TRIGGER after_staff_insert

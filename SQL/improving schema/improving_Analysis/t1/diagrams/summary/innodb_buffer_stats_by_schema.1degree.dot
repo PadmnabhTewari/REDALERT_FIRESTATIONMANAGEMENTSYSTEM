@@ -1,0 +1,36 @@
+// dot 12.1.0 on Linux 6.13.8-200.fc41.x86_64
+// SchemaSpy rev 590
+digraph "innodb_buffer_stats_by_schema" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "innodb_buffer_stats_by_schema" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">innodb_buffer_stats_by_schema</TD></TR>
+      <TR><TD PORT="object_schema" COLSPAN="3" ALIGN="LEFT">object_schema</TD></TR>
+      <TR><TD PORT="allocated" COLSPAN="3" ALIGN="LEFT">allocated</TD></TR>
+      <TR><TD PORT="data" COLSPAN="3" ALIGN="LEFT">data</TD></TR>
+      <TR><TD PORT="pages" COLSPAN="3" ALIGN="LEFT">pages</TD></TR>
+      <TR><TD PORT="pages_hashed" COLSPAN="3" ALIGN="LEFT">pages_hashed</TD></TR>
+      <TR><TD PORT="pages_old" COLSPAN="3" ALIGN="LEFT">pages_old</TD></TR>
+      <TR><TD PORT="rows_cached" COLSPAN="3" ALIGN="LEFT">rows_cached</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">view</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/innodb_buffer_stats_by_schema.html"
+    tooltip="innodb_buffer_stats_by_schema"
+  ];
+}

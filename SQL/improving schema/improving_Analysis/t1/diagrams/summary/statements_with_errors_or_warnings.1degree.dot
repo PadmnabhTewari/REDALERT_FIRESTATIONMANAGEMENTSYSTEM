@@ -1,0 +1,39 @@
+// dot 12.1.0 on Linux 6.13.8-200.fc41.x86_64
+// SchemaSpy rev 590
+digraph "statements_with_errors_or_warnings" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "statements_with_errors_or_warnings" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">statements_with_errors_or_warnings</TD></TR>
+      <TR><TD PORT="query" COLSPAN="3" ALIGN="LEFT">query</TD></TR>
+      <TR><TD PORT="db" COLSPAN="3" ALIGN="LEFT">db</TD></TR>
+      <TR><TD PORT="exec_count" COLSPAN="3" ALIGN="LEFT">exec_count</TD></TR>
+      <TR><TD PORT="errors" COLSPAN="3" ALIGN="LEFT">errors</TD></TR>
+      <TR><TD PORT="error_pct" COLSPAN="3" ALIGN="LEFT">error_pct</TD></TR>
+      <TR><TD PORT="warnings" COLSPAN="3" ALIGN="LEFT">warnings</TD></TR>
+      <TR><TD PORT="warning_pct" COLSPAN="3" ALIGN="LEFT">warning_pct</TD></TR>
+      <TR><TD PORT="first_seen" COLSPAN="3" ALIGN="LEFT">first_seen</TD></TR>
+      <TR><TD PORT="last_seen" COLSPAN="3" ALIGN="LEFT">last_seen</TD></TR>
+      <TR><TD PORT="digest" COLSPAN="3" ALIGN="LEFT">digest</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">view</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/statements_with_errors_or_warnings.html"
+    tooltip="statements_with_errors_or_warnings"
+  ];
+}
