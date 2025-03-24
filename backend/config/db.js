@@ -8,6 +8,9 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME,
   port: process.env.DB_PORT,
   waitForConnections: true,
+  ssl: {
+    ca: fs.readFileSync('./certs/ca.pem') // Load Aiven's CA certificate
+  }
 });
 
 module.exports = pool.promise();
