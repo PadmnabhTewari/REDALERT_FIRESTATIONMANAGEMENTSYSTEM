@@ -1,6 +1,10 @@
+import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
 import React from 'react';
 
+
 const Navbar = () => {
+  const { openSignIn } = useClerk();
+  const { user } = useUser();
   return (
     <nav className="bg-gray-900 p-4 text-white shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
@@ -11,7 +15,15 @@ const Navbar = () => {
           <a href="/vehicles" className="text-pink-400 hover:text-pink-300 transition">Vehicles</a>
           <a href="/staff" className="text-pink-400 hover:text-pink-300 transition">Staff</a>
           <a href="/reports" className="text-pink-400 hover:text-pink-300 transition">Reports</a>
-          <a href="/login" className="text-pink-400 hover:text-pink-300 transition">Login</a>
+          {user ? <UserButton /> :
+            <button onClick={() => {
+              openSignIn()
+              console.log("clicked");
+            }} className='bg-pink-400 text-white px-4 py-2 rounded-full'>
+              Create Account
+            </button>
+          }
+          {/* <button onClick={()=>openSignIn()} className="text-pink-400 hover:text-pink-300 transition">Login</button> */}
         </div>
       </div>
     </nav>
