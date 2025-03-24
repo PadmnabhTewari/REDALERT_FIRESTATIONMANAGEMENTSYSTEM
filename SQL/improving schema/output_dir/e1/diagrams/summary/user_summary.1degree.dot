@@ -1,0 +1,41 @@
+// dot 12.1.0 on Linux 6.13.8-200.fc41.x86_64
+// SchemaSpy rev 590
+digraph "user_summary" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "user_summary" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">user_summary</TD></TR>
+      <TR><TD PORT="user" COLSPAN="3" ALIGN="LEFT">user</TD></TR>
+      <TR><TD PORT="statements" COLSPAN="3" ALIGN="LEFT">statements</TD></TR>
+      <TR><TD PORT="statement_latency" COLSPAN="3" ALIGN="LEFT">statement_latency</TD></TR>
+      <TR><TD PORT="statement_avg_latency" COLSPAN="3" ALIGN="LEFT">statement_avg_latency</TD></TR>
+      <TR><TD PORT="table_scans" COLSPAN="3" ALIGN="LEFT">table_scans</TD></TR>
+      <TR><TD PORT="file_ios" COLSPAN="3" ALIGN="LEFT">file_ios</TD></TR>
+      <TR><TD PORT="file_io_latency" COLSPAN="3" ALIGN="LEFT">file_io_latency</TD></TR>
+      <TR><TD PORT="current_connections" COLSPAN="3" ALIGN="LEFT">current_connections</TD></TR>
+      <TR><TD PORT="total_connections" COLSPAN="3" ALIGN="LEFT">total_connections</TD></TR>
+      <TR><TD PORT="unique_hosts" COLSPAN="3" ALIGN="LEFT">unique_hosts</TD></TR>
+      <TR><TD PORT="current_memory" COLSPAN="3" ALIGN="LEFT">current_memory</TD></TR>
+      <TR><TD PORT="total_memory_allocated" COLSPAN="3" ALIGN="LEFT">total_memory_allocated</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">view</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/user_summary.html"
+    tooltip="user_summary"
+  ];
+}

@@ -1,0 +1,54 @@
+// dot 12.1.0 on Linux 6.13.8-200.fc41.x86_64
+// SchemaSpy rev 590
+digraph "schema_table_statistics_with_buffer" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "schema_table_statistics_with_buffer" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">schema_table_statistics_with_buffer</TD></TR>
+      <TR><TD PORT="table_schema" COLSPAN="3" ALIGN="LEFT">table_schema</TD></TR>
+      <TR><TD PORT="table_name" COLSPAN="3" ALIGN="LEFT">table_name</TD></TR>
+      <TR><TD PORT="rows_fetched" COLSPAN="3" ALIGN="LEFT">rows_fetched</TD></TR>
+      <TR><TD PORT="fetch_latency" COLSPAN="3" ALIGN="LEFT">fetch_latency</TD></TR>
+      <TR><TD PORT="rows_inserted" COLSPAN="3" ALIGN="LEFT">rows_inserted</TD></TR>
+      <TR><TD PORT="insert_latency" COLSPAN="3" ALIGN="LEFT">insert_latency</TD></TR>
+      <TR><TD PORT="rows_updated" COLSPAN="3" ALIGN="LEFT">rows_updated</TD></TR>
+      <TR><TD PORT="update_latency" COLSPAN="3" ALIGN="LEFT">update_latency</TD></TR>
+      <TR><TD PORT="rows_deleted" COLSPAN="3" ALIGN="LEFT">rows_deleted</TD></TR>
+      <TR><TD PORT="delete_latency" COLSPAN="3" ALIGN="LEFT">delete_latency</TD></TR>
+      <TR><TD PORT="io_read_requests" COLSPAN="3" ALIGN="LEFT">io_read_requests</TD></TR>
+      <TR><TD PORT="io_read" COLSPAN="3" ALIGN="LEFT">io_read</TD></TR>
+      <TR><TD PORT="io_read_latency" COLSPAN="3" ALIGN="LEFT">io_read_latency</TD></TR>
+      <TR><TD PORT="io_write_requests" COLSPAN="3" ALIGN="LEFT">io_write_requests</TD></TR>
+      <TR><TD PORT="io_write" COLSPAN="3" ALIGN="LEFT">io_write</TD></TR>
+      <TR><TD PORT="io_write_latency" COLSPAN="3" ALIGN="LEFT">io_write_latency</TD></TR>
+      <TR><TD PORT="io_misc_requests" COLSPAN="3" ALIGN="LEFT">io_misc_requests</TD></TR>
+      <TR><TD PORT="io_misc_latency" COLSPAN="3" ALIGN="LEFT">io_misc_latency</TD></TR>
+      <TR><TD PORT="innodb_buffer_allocated" COLSPAN="3" ALIGN="LEFT">innodb_buffer_allocated</TD></TR>
+      <TR><TD PORT="innodb_buffer_data" COLSPAN="3" ALIGN="LEFT">innodb_buffer_data</TD></TR>
+      <TR><TD PORT="innodb_buffer_free" COLSPAN="3" ALIGN="LEFT">innodb_buffer_free</TD></TR>
+      <TR><TD PORT="innodb_buffer_pages" COLSPAN="3" ALIGN="LEFT">innodb_buffer_pages</TD></TR>
+      <TR><TD PORT="innodb_buffer_pages_hashed" COLSPAN="3" ALIGN="LEFT">innodb_buffer_pages_hashed</TD></TR>
+      <TR><TD PORT="innodb_buffer_pages_old" COLSPAN="3" ALIGN="LEFT">innodb_buffer_pages_old</TD></TR>
+      <TR><TD PORT="innodb_buffer_rows_cached" COLSPAN="3" ALIGN="LEFT">innodb_buffer_rows_cached</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">view</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/schema_table_statistics_with_buffer.html"
+    tooltip="schema_table_statistics_with_buffer"
+  ];
+}

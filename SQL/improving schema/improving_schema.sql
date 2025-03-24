@@ -9,24 +9,20 @@ CREATE TABLE FireStation (
   Status ENUM('Active', 'Inactive') DEFAULT 'Active'
 );
 
--- VehicleModel Table (Same as before)
 CREATE TABLE VehicleModel (
-  Type VARCHAR(255) NOT NULL,
-  Model_No VARCHAR(255) NOT NULL,
-  Water_Capacity INT CHECK (Water_Capacity >= 0),
-  PRIMARY KEY (Type, Model_No)
+  Model_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Type ENUM('Fire Truck', 'Ambulance', 'Rescue Van', 'Water Tanker') NOT NULL,
+  Fuel_Capacity INT CHECK (Fuel_Capacity >= 0),
+  Water_Capacity INT CHECK (Water_Capacity >= 0) DEFAULT NULL  
 );
 
--- Vehicle Table (ON DELETE CASCADE instead of SET NULL)
 CREATE TABLE Vehicle (
   Vehicle_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Type VARCHAR(255) NOT NULL,
-  Model_No VARCHAR(255) NOT NULL,
+  Model_ID INT NOT NULL,
   Status ENUM('Available', 'In Use', 'Under Maintenance') NOT NULL,
   Last_Maintenance_Date DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (Type, Model_No) REFERENCES VehicleModel(Type, Model_No) ON DELETE CASCADE
+  FOREIGN KEY (Model_ID) REFERENCES VehicleModel(Model_ID) ON DELETE CASCADE
 );
-
 -- FireStationVehicle Table (New: Many-to-Many relationship between FireStations and Vehicles)
 CREATE TABLE FireStationVehicle (
   Station_ID INT,

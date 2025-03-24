@@ -1,0 +1,42 @@
+// dot 12.1.0 on Linux 6.13.8-200.fc41.x86_64
+// SchemaSpy rev 590
+digraph "io_global_by_wait_by_bytes" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "io_global_by_wait_by_bytes" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">io_global_by_wait_by_bytes</TD></TR>
+      <TR><TD PORT="event_name" COLSPAN="3" ALIGN="LEFT">event_name</TD></TR>
+      <TR><TD PORT="total" COLSPAN="3" ALIGN="LEFT">total</TD></TR>
+      <TR><TD PORT="total_latency" COLSPAN="3" ALIGN="LEFT">total_latency</TD></TR>
+      <TR><TD PORT="min_latency" COLSPAN="3" ALIGN="LEFT">min_latency</TD></TR>
+      <TR><TD PORT="avg_latency" COLSPAN="3" ALIGN="LEFT">avg_latency</TD></TR>
+      <TR><TD PORT="max_latency" COLSPAN="3" ALIGN="LEFT">max_latency</TD></TR>
+      <TR><TD PORT="count_read" COLSPAN="3" ALIGN="LEFT">count_read</TD></TR>
+      <TR><TD PORT="total_read" COLSPAN="3" ALIGN="LEFT">total_read</TD></TR>
+      <TR><TD PORT="avg_read" COLSPAN="3" ALIGN="LEFT">avg_read</TD></TR>
+      <TR><TD PORT="count_write" COLSPAN="3" ALIGN="LEFT">count_write</TD></TR>
+      <TR><TD PORT="total_written" COLSPAN="3" ALIGN="LEFT">total_written</TD></TR>
+      <TR><TD PORT="avg_written" COLSPAN="3" ALIGN="LEFT">avg_written</TD></TR>
+      <TR><TD PORT="total_requested" COLSPAN="3" ALIGN="LEFT">total_requested</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">view</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/io_global_by_wait_by_bytes.html"
+    tooltip="io_global_by_wait_by_bytes"
+  ];
+}

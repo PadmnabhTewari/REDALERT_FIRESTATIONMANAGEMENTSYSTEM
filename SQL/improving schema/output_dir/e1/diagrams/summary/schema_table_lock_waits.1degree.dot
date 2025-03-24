@@ -1,0 +1,47 @@
+// dot 12.1.0 on Linux 6.13.8-200.fc41.x86_64
+// SchemaSpy rev 590
+digraph "schema_table_lock_waits" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "schema_table_lock_waits" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">schema_table_lock_waits</TD></TR>
+      <TR><TD PORT="object_schema" COLSPAN="3" ALIGN="LEFT">object_schema</TD></TR>
+      <TR><TD PORT="object_name" COLSPAN="3" ALIGN="LEFT">object_name</TD></TR>
+      <TR><TD PORT="waiting_thread_id" COLSPAN="3" ALIGN="LEFT">waiting_thread_id</TD></TR>
+      <TR><TD PORT="waiting_pid" COLSPAN="3" ALIGN="LEFT">waiting_pid</TD></TR>
+      <TR><TD PORT="waiting_account" COLSPAN="3" ALIGN="LEFT">waiting_account</TD></TR>
+      <TR><TD PORT="waiting_lock_type" COLSPAN="3" ALIGN="LEFT">waiting_lock_type</TD></TR>
+      <TR><TD PORT="waiting_lock_duration" COLSPAN="3" ALIGN="LEFT">waiting_lock_duration</TD></TR>
+      <TR><TD PORT="waiting_query" COLSPAN="3" ALIGN="LEFT">waiting_query</TD></TR>
+      <TR><TD PORT="waiting_query_secs" COLSPAN="3" ALIGN="LEFT">waiting_query_secs</TD></TR>
+      <TR><TD PORT="waiting_query_rows_affected" COLSPAN="3" ALIGN="LEFT">waiting_query_rows_affected</TD></TR>
+      <TR><TD PORT="waiting_query_rows_examined" COLSPAN="3" ALIGN="LEFT">waiting_query_rows_examined</TD></TR>
+      <TR><TD PORT="blocking_thread_id" COLSPAN="3" ALIGN="LEFT">blocking_thread_id</TD></TR>
+      <TR><TD PORT="blocking_pid" COLSPAN="3" ALIGN="LEFT">blocking_pid</TD></TR>
+      <TR><TD PORT="blocking_account" COLSPAN="3" ALIGN="LEFT">blocking_account</TD></TR>
+      <TR><TD PORT="blocking_lock_type" COLSPAN="3" ALIGN="LEFT">blocking_lock_type</TD></TR>
+      <TR><TD PORT="blocking_lock_duration" COLSPAN="3" ALIGN="LEFT">blocking_lock_duration</TD></TR>
+      <TR><TD PORT="sql_kill_blocking_query" COLSPAN="3" ALIGN="LEFT">sql_kill_blocking_query</TD></TR>
+      <TR><TD PORT="sql_kill_blocking_connection" COLSPAN="3" ALIGN="LEFT">sql_kill_blocking_connection</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">view</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/schema_table_lock_waits.html"
+    tooltip="schema_table_lock_waits"
+  ];
+}
