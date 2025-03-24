@@ -81,7 +81,7 @@ const Maintenance = () => {
                   <td className="border-b px-4 py-2">{maintenance.Vehicle_ID}</td>
                   <td className="border-b px-4 py-2">{maintenance.Maintenance_Type}</td>
                   <td className="border-b px-4 py-2">{new Date(maintenance.Date_Performed).toLocaleString()}</td>
-                  <td className="border-b px-4 py-2">${maintenance.Cost.toFixed(2)}</td>
+                  <td className="border-b px-4 py-2">${maintenance.Cost}</td>
                   <td className="border-b px-4 py-2">{maintenance.Performed_By}</td>
                 </tr>
               ))

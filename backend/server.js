@@ -8,7 +8,7 @@ const staffRoutes = require("./routes/staffRoutes");
 const vehicleRoutes = require("./routes/vehicleRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes"); // ✅ Add this
 const supplierRoutes = require('./routes/supplierRoutes');
-const maintenanceRoutes = require('./routes/maintenanceRoutes');
+const maintenanceRoutes = require('./routes/maintainanceRoutes');
 const inventoryRoutes = require('./routes/inventoryRoutes');
 
 
