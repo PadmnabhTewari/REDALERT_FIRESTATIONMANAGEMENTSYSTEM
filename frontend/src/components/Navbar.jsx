@@ -19,7 +19,7 @@ const Navbar = () => {
             <button onClick={() => {
               openSignIn()
               console.log("clicked");
-            }} className='bg-cyan-400 text-white px-2 py-2 rounded-full'>
+            }} className='bg-pink-400 text-white px-4 py-2 rounded-full'>
               Create Account
             </button>
           }
