@@ -26,6 +26,7 @@ CREATE TABLE FireStation (
   Status ENUM('Active', 'Inactive', 'Under Renovation') DEFAULT 'Active',
   Establishment_Date DATE,
   Capacity INT,
+  Total_Vehicles INT DEFAULT 0,
   FOREIGN KEY (Location_ID) REFERENCES StationLocation(Location_ID)
 );
 

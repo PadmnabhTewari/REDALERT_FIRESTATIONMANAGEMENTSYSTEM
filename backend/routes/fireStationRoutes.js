@@ -116,4 +116,20 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Get stations for dropdown (minimal data)
+router.get("/dropdown", async (req, res) => {
+  try {
+    const [rows] = await pool.query(`
+      SELECT Station_ID, Name
+      FROM FireStation
+      WHERE Status = 'Active'
+      ORDER BY Name
+    `);
+    res.json(rows);
+  } catch (error) {
+    console.error("❌ Error fetching stations for dropdown:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
