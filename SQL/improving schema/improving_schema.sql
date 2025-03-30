@@ -218,7 +218,6 @@ CREATE TABLE FuelLog (
   FOREIGN KEY (Vehicle_ID) REFERENCES Vehicle(Vehicle_ID)
 );
 
--- Triggers (must come after all tables are created)
 DELIMITER //
 
 CREATE TRIGGER after_staff_insert
