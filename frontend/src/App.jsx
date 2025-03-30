@@ -15,10 +15,11 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import Maintenance from "./pages/Maintenance";
-import Supplier from "./pages/Suppliers";
+import Supplier from "./pages/RegisterSupplier";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import AdminReport from "./pages/AdminReport"; // ✅ Import AdminReport
 import UserReport from "./pages/UserReport"; // ✅ Import UserReport
+import SupplyTransaction from "./pages/SupplyTransaction"; // ✅ Import SupplyTransaction
 
 const AppContent = () => {
   const location = useLocation();
@@ -61,6 +62,14 @@ const AppContent = () => {
               element={
                 <ProtectedRoute allowedRoles={["admin"]}>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/supply"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <SupplyTransaction />
                 </ProtectedRoute>
               }
             />

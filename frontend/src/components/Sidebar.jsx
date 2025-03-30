@@ -19,8 +19,9 @@ const Sidebar = () => {
     { path: '/admin/vehicles', label: '🚗 Vehicles' },
     { path: '/admin/staff', label: '👨‍🚒 Staff' },
     { path: '/admin/reports', label: '📄 Reports' },
-    { path: '/admin/suppliers', label: '📦 Suppliers' },
+    { path: '/admin/suppliers', label: '📦 Register Suppliers' },
     { path: '/admin/maintenance', label: '🛠 Maintenance' },
+    { path: '/admin/Supply', label: '📦 Supply' },
   ];
 
   const links = userRole === 'admin' ? adminLinks : userLinks;
