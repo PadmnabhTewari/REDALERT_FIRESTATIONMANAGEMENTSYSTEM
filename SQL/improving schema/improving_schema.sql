@@ -27,6 +27,7 @@ CREATE TABLE FireStation (
   Establishment_Date DATE,
   Capacity INT,
   Total_Vehicles INT DEFAULT 0,
+  Total_Staff INT DEFAULT 0,
   FOREIGN KEY (Location_ID) REFERENCES StationLocation(Location_ID)
 );
 
@@ -311,3 +312,4 @@ BEGIN
 END//
 
 DELIMITER ;
+
