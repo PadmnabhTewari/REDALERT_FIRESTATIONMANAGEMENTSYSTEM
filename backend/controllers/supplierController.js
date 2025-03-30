@@ -1,91 +1,151 @@
-const pool = require("../config/db");
+const Supplier = require('../models/Supplier');
 
 // Create a new supplier
 exports.createSupplier = async (req, res) => {
-  const { Name, Contact, Address } = req.body;
-
-  if (!Name || !Contact || !Address) {
-    return res.status(400).json({ error: "⚠️ All fields are required!" });
-  }
-
   try {
-    const [result] = await pool.query(
-      "INSERT INTO Supplier (Name, Contact, Address) VALUES (?, ?, ?)",
-      [Name, Contact, Address]
-    );
-    
-    res.status(201).json({ id: result.insertId, message: "✅ Supplier added successfully!" });
+    const { Name, Contact_Phone, Email, Address } = req.body;
+
+    // Validate required fields
+    if (!Name || !Contact_Phone || !Email || !Address) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const supplierId = await Supplier.create(req.body);
+    const supplier = await Supplier.findById(supplierId);
+    res.status(201).json(supplier);
   } catch (error) {
-    console.error("❌ Error creating supplier:", error);
-    res.status(500).json({ error: "Failed to create supplier" });
+    console.error('Error creating supplier:', error);
+    res.status(500).json({ error: 'Failed to create supplier' });
   }
 };
 
 // Get all suppliers
 exports.getSuppliers = async (req, res) => {
   try {
-    const [suppliers] = await pool.query("SELECT * FROM Supplier");
+    const suppliers = await Supplier.findAll();
     res.json(suppliers);
   } catch (error) {
-    console.error("❌ Error fetching suppliers:", error);
-    res.status(500).json({ error: "Failed to fetch suppliers" });
+    console.error('Error fetching suppliers:', error);
+    res.status(500).json({ error: 'Failed to fetch suppliers' });
   }
 };
 
 // Get a single supplier by ID
 exports.getSupplierById = async (req, res) => {
-  const supplierId = req.params.id;
-
   try {
-    const [supplier] = await pool.query("SELECT * FROM Supplier WHERE Supplier_ID = ?", [supplierId]);
-
-    if (supplier.length === 0) {
-      return res.status(404).json({ error: "❌ Supplier not found!" });
+    const supplier = await Supplier.findById(req.params.id);
+    if (!supplier) {
+      return res.status(404).json({ error: 'Supplier not found' });
     }
-
-    res.json(supplier[0]);
+    res.json(supplier);
   } catch (error) {
-    console.error("❌ Error fetching supplier:", error);
-    res.status(500).json({ error: "Failed to fetch supplier" });
+    console.error('Error fetching supplier:', error);
+    res.status(500).json({ error: 'Failed to fetch supplier' });
   }
 };
 
 // Update a supplier
 exports.updateSupplier = async (req, res) => {
-  const supplierId = req.params.id;
-  const { Name, Contact, Address } = req.body;
-
   try {
-    const [result] = await pool.query(
-      "UPDATE Supplier SET Name = ?, Contact = ?, Address = ? WHERE Supplier_ID = ?",
-      [Name, Contact, Address, supplierId]
-    );
+    const { Name, Contact_Phone, Email, Address } = req.body;
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: "❌ Supplier not found!" });
+    // Validate required fields
+    if (!Name || !Contact_Phone || !Email || !Address) {
+      return res.status(400).json({ error: 'All fields are required' });
     }
 
-    res.json({ message: "✅ Supplier updated successfully!" });
+    const success = await Supplier.update(req.params.id, req.body);
+    if (!success) {
+      return res.status(404).json({ error: 'Supplier not found' });
+    }
+    const supplier = await Supplier.findById(req.params.id);
+    res.json(supplier);
   } catch (error) {
-    console.error("❌ Error updating supplier:", error);
-    res.status(500).json({ error: "Failed to update supplier" });
+    console.error('Error updating supplier:', error);
+    res.status(500).json({ error: 'Failed to update supplier' });
   }
 };
 
 // Delete a supplier
 exports.deleteSupplier = async (req, res) => {
-  const supplierId = req.params.id;
-
   try {
-    const [result] = await pool.query("DELETE FROM Supplier WHERE Supplier_ID = ?", [supplierId]);
+    const success = await Supplier.delete(req.params.id);
+    if (!success) {
+      return res.status(404).json({ error: 'Supplier not found' });
+    }
+    res.json({ message: 'Supplier deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting supplier:', error);
+    res.status(500).json({ error: 'Failed to delete supplier' });
+  }
+};
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: "❌ Supplier not found!" });
+exports.getSupplierItems = async (req, res) => {
+  try {
+    const items = await Supplier.getSupplierItems(req.params.id);
+    res.json(items);
+  } catch (error) {
+    console.error('Error fetching supplier items:', error);
+    res.status(500).json({ error: 'Failed to fetch supplier items' });
+  }
+};
+
+exports.addSupplierItem = async (req, res) => {
+  try {
+    const { Item_ID, Price } = req.body;
+    const Supplier_ID = req.params.id;
+
+    if (!Item_ID || !Price) {
+      return res.status(400).json({ error: 'Item ID and Price are required' });
     }
 
-    res.json({ message: "✅ Supplier deleted successfully!" });
+    await Supplier.addSupplierItem(Supplier_ID, Item_ID, Price);
+    const items = await Supplier.getSupplierItems(Supplier_ID);
+    res.status(201).json(items);
   } catch (error) {
-    console.error("❌ Error deleting supplier:", error);
-    res.status(500).json({ error: "Failed to delete supplier" });
+    console.error('Error adding supplier item:', error);
+    res.status(500).json({ error: 'Failed to add supplier item' });
+  }
+};
+
+exports.updateSupplierItem = async (req, res) => {
+  try {
+    const { Item_ID, Price } = req.body;
+    const Supplier_ID = req.params.id;
+
+    if (!Item_ID || !Price) {
+      return res.status(400).json({ error: 'Item ID and Price are required' });
+    }
+
+    await Supplier.updateSupplierItem(Supplier_ID, Item_ID, Price);
+    const items = await Supplier.getSupplierItems(Supplier_ID);
+    res.json(items);
+  } catch (error) {
+    console.error('Error updating supplier item:', error);
+    res.status(500).json({ error: 'Failed to update supplier item' });
+  }
+};
+
+exports.deleteSupplierItem = async (req, res) => {
+  try {
+    const { Item_ID } = req.params;
+    const Supplier_ID = req.params.id;
+
+    await Supplier.deleteSupplierItem(Supplier_ID, Item_ID);
+    const items = await Supplier.getSupplierItems(Supplier_ID);
+    res.json(items);
+  } catch (error) {
+    console.error('Error deleting supplier item:', error);
+    res.status(500).json({ error: 'Failed to delete supplier item' });
+  }
+};
+
+exports.getAllSupplierItems = async (req, res) => {
+  try {
+    const items = await Supplier.getAllSupplierItems();
+    res.json(items);
+  } catch (error) {
+    console.error('Error fetching all supplier items:', error);
+    res.status(500).json({ error: 'Failed to fetch all supplier items' });
   }
 };
