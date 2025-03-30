@@ -37,7 +37,7 @@ const Login = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
       <div className="bg-gray-800 p-8 rounded-lg shadow-xl w-96">
         <h1 className="text-2xl font-bold text-center mb-6 text-pink-400">
-          🔥 Fire Station Login
+          🔥 Red-Alert Login
         </h1>
 
         {message && <p className="text-center mb-4 text-yellow-400">{message}</p>}
