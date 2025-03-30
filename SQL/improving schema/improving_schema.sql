@@ -286,10 +286,27 @@ CREATE TRIGGER insert_report_location
 BEFORE INSERT ON Report
 FOR EACH ROW
 BEGIN
+  -- Declare variables at the beginning of the block
+  DECLARE v_city VARCHAR(255);
+  DECLARE v_state VARCHAR(255);
+  
   -- Check if Pincode exists in ReportLocation
   IF NOT EXISTS (SELECT 1 FROM ReportLocation WHERE Pincode = NEW.Pincode) THEN
-    INSERT INTO ReportLocation (Pincode, City, State)
-    VALUES (NEW.Pincode, NEW.City, NEW.State);
+    -- Try to get city/state from PincodeMapping
+    SELECT City, State INTO v_city, v_state 
+    FROM PincodeMapping 
+    WHERE Pincode = NEW.Pincode
+    LIMIT 1;
+    
+    -- If found in PincodeMapping, use those values
+    IF v_city IS NOT NULL AND v_state IS NOT NULL THEN
+      INSERT INTO ReportLocation (Pincode, City, State)
+      VALUES (NEW.Pincode, v_city, v_state);
+    ELSE
+      -- If not found, insert with NULL values (or default values)
+      INSERT INTO ReportLocation (Pincode, City, State)
+      VALUES (NEW.Pincode, NULL, NULL);
+    END IF;
   END IF;
 END//
 
