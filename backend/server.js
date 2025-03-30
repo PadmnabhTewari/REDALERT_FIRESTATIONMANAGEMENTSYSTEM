@@ -1,19 +1,17 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+
 const fireStationRoutes = require("./routes/fireStationRoutes");
 const authRoutes = require("./routes/authRoutes");
-const reportRoutes = require("./routes/reportRoutes");
+const adminReportRoutes = require("./routes/adminReportRoutes"); // ✅ Admin Reports
+const userReportRoutes = require("./routes/userReportRoutes");   // ✅ User Reports
 const staffRoutes = require("./routes/staffRoutes");
 const vehicleRoutes = require("./routes/vehicleRoutes");
-const dashboardRoutes = require("./routes/dashboardRoutes"); // ✅ Add this
+const dashboardRoutes = require("./routes/dashboardRoutes");
 const supplierRoutes = require('./routes/supplierRoutes');
 const maintenanceRoutes = require('./routes/maintainanceRoutes');
 const inventoryRoutes = require('./routes/inventoryRoutes');
-
-
-
-
 
 dotenv.config();
 const app = express();
@@ -23,7 +21,8 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/reports", reportRoutes);
+app.use("/api/admin/reports", adminReportRoutes);  // ✅ Admin reports
+app.use("/api/user/reports", userReportRoutes);    // ✅ User reports
 app.use("/api/staff", staffRoutes);
 app.use("/api/vehicles", vehicleRoutes);
 app.use("/api/dashboard", dashboardRoutes);
