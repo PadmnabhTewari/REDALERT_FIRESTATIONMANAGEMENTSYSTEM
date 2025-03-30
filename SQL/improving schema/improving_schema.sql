@@ -220,6 +220,7 @@ CREATE TABLE FuelLog (
 
 DELIMITER //
 
+-- Create new trigger for staff insert
 CREATE TRIGGER after_staff_insert
 AFTER INSERT ON Staff
 FOR EACH ROW
@@ -228,6 +229,33 @@ BEGIN
   SET Total_Staff = (SELECT COUNT(*) FROM Staff WHERE Station_ID = NEW.Station_ID)
   WHERE Station_ID = NEW.Station_ID;
 END//
+
+-- Create new trigger for staff delete
+CREATE TRIGGER after_staff_delete
+AFTER DELETE ON Staff
+FOR EACH ROW
+BEGIN
+  UPDATE FireStation
+  SET Total_Staff = (SELECT COUNT(*) FROM Staff WHERE Station_ID = OLD.Station_ID)
+  WHERE Station_ID = OLD.Station_ID;
+END//
+
+-- Create new trigger for staff update
+CREATE TRIGGER after_staff_update
+AFTER UPDATE ON Staff
+FOR EACH ROW
+BEGIN
+  -- Update old station counts
+  UPDATE FireStation
+  SET Total_Staff = (SELECT COUNT(*) FROM Staff WHERE Station_ID = OLD.Station_ID)
+  WHERE Station_ID = OLD.Station_ID;
+
+  -- Update new station counts
+  UPDATE FireStation
+  SET Total_Staff = (SELECT COUNT(*) FROM Staff WHERE Station_ID = NEW.Station_ID)
+  WHERE Station_ID = NEW.Station_ID;
+END//
+
 
 CREATE TRIGGER after_vehicle_insert
 AFTER INSERT ON FireStationVehicle
@@ -238,14 +266,6 @@ BEGIN
   WHERE Station_ID = NEW.Station_ID;
 END//
 
-CREATE TRIGGER after_staff_delete
-AFTER DELETE ON Staff
-FOR EACH ROW
-BEGIN
-  UPDATE FireStation
-  SET Total_Staff = (SELECT COUNT(*) FROM Staff WHERE Station_ID = OLD.Station_ID)
-  WHERE Station_ID = OLD.Station_ID;
-END//
 
 CREATE TRIGGER after_vehicle_delete
 AFTER DELETE ON FireStationVehicle
