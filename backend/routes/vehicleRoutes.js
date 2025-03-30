@@ -6,9 +6,9 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const [rows] = await pool.query(`
-      SELECT v.Vehicle_ID, vm.Type, vm.Model_No, v.Status, v.Station_ID, v.Last_Maintenance_Date
+      SELECT v.Vehicle_ID, vm.Type AS Model_Type, v.Status, v.Last_Maintenance_Date
       FROM Vehicle v
-      JOIN VehicleModel vm ON v.Type = vm.Type AND v.Model_No = vm.Model_No
+      JOIN VehicleModel vm ON v.Model_ID = vm.Model_ID
     `);
     res.json(rows);
   } catch (error) {
@@ -17,13 +17,24 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get all vehicle models
+router.get("/models", async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT Model_ID, Type FROM VehicleModel");
+    res.json(rows);
+  } catch (error) {
+    console.error("❌ Error fetching vehicle models:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 // Add a new vehicle
 router.post("/", async (req, res) => {
   console.log("🚀 Vehicle request received:", req.body);
 
-  const { type, model_no, status, water_capacity, station_id, last_maintenance_date } = req.body;
+  const { model_id, status, last_maintenance_date } = req.body;
 
-  if (!type || !model_no || !status || !station_id) {
+  if (!model_id || !status) {
     console.log("❌ Missing required fields");
     return res.status(400).json({ error: "Missing required fields" });
   }
@@ -34,8 +45,8 @@ router.post("/", async (req, res) => {
 
     // Ensure the vehicle model exists
     const [modelCheck] = await connection.query(
-      "SELECT * FROM VehicleModel WHERE Type = ? AND Model_No = ?",
-      [type, model_no]
+      "SELECT * FROM VehicleModel WHERE Model_ID = ?",
+      [model_id]
     );
 
     if (modelCheck.length === 0) {
@@ -45,8 +56,8 @@ router.post("/", async (req, res) => {
     }
 
     const [result] = await connection.query(
-      "INSERT INTO Vehicle (Type, Model_No, Status, Station_ID, Last_Maintenance_Date) VALUES (?, ?, ?, ?, ?)",
-      [type, model_no, status, station_id, last_maintenance_date || new Date()]
+      "INSERT INTO Vehicle (Model_ID, Status, Last_Maintenance_Date) VALUES (?, ?, ?)",
+      [model_id, status, last_maintenance_date || new Date()]
     );
 
     await connection.commit();
