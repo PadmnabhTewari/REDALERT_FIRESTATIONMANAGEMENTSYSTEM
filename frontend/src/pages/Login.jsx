@@ -2,30 +2,35 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:5000/api/auth/login";
+const API_URL = "http://localhost:5000/api/auth";
 
 const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(API_URL, { userName, password });
-      if (response.status === 200) {
-        navigate("/dashboard");
+      const endpoint = isAdmin ? `${API_URL}/admin/signin` : `${API_URL}/signin`;
+      const response = await axios.post(endpoint, { 
+        username: userName, 
+        password: password 
+      });
+      
+      if (response.data.success) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('userRole', response.data.role);
+        navigate(response.data.role === 'admin' ? '/admin/dashboard' : '/user/reports');
+        setMessage(`✅ Login successful!`);
       }
-      setMessage(`✅ Login successful! Welcome, ${response.data.user}.`);
     } catch (error) {
       setMessage("❌ Login failed. Please check your credentials.");
       console.error("Login error:", error);
     }
-
-    setUserName("");
-    setPassword("");
   };
 
   return (
@@ -62,6 +67,17 @@ const Login = () => {
               required
             />
           </div>
+          <div className="mb-4">
+            <label className="flex items-center text-sm font-medium text-gray-300">
+              <input
+                type="checkbox"
+                checked={isAdmin}
+                onChange={(e) => setIsAdmin(e.target.checked)}
+                className="mr-2"
+              />
+              Login as Admin
+            </label>
+          </div>
           <button
             type="submit"
             className="w-full bg-pink-600 text-white p-2 rounded-lg hover:bg-pink-700 transition"
@@ -69,6 +85,15 @@ const Login = () => {
             Login
           </button>
         </form>
+        <p className="mt-4 text-center text-gray-400">
+          Don't have an account?{" "}
+          <button
+            onClick={() => navigate("/signup")}
+            className="text-pink-400 hover:text-pink-300"
+          >
+            Sign up here
+          </button>
+        </p>
       </div>
     </div>
   );

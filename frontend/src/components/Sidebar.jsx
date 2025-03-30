@@ -1,50 +1,45 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Sidebar = () => {
+  const location = useLocation();
+  const userRole = localStorage.getItem('userRole');
+
+  const isActive = (path) => {
+    return location.pathname === path ? 'bg-pink-600' : 'bg-gray-800';
+  };
+
+  const userLinks = [
+    { path: '/user/reports', label: '📄 Reports' },
+  ];
+
+  const adminLinks = [
+    { path: '/admin/dashboard', label: '📊 Dashboard' },
+    { path: '/admin/fire-stations', label: '🚒 Fire Stations' },
+    { path: '/admin/vehicles', label: '🚗 Vehicles' },
+    { path: '/admin/staff', label: '👨‍🚒 Staff' },
+    { path: '/admin/reports', label: '📄 Reports' },
+    { path: '/admin/suppliers', label: '📦 Suppliers' },
+    { path: '/admin/inventory', label: '🗃 Inventory' },
+    { path: '/admin/maintenance', label: '🛠 Maintenance' },
+  ];
+
+  const links = userRole === 'admin' ? adminLinks : userLinks;
+
   return (
     <div className="bg-gray-900 text-white w-64 min-h-screen p-6 shadow-lg">
       <h2 className="text-2xl font-bold text-pink-400 mb-6">🔥 Fire Station</h2>
       <ul className="space-y-3">
-        <li>
-          <a href="/dashboard" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
-            📊 Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="/fire-stations" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
-            🚒 Fire Stations
-          </a>
-        </li>
-        <li>
-          <a href="/vehicles" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
-            🚗 Vehicles
-          </a>
-        </li>
-        <li>
-          <a href="/staff" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
-            👨‍🚒 Staff
-          </a>
-        </li>
-        <li>
-          <a href="/reports" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
-            📄 Reports
-          </a>
-        </li>
-        <li>
-          <a href="/suppliers" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
-            📦 Suppliers
-          </a>
-        </li>
-        <li>
-          <a href="/inventory" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
-            🗃 Inventory
-          </a>
-        </li>
-        <li>
-          <a href="/maintenance" className="block px-4 py-2 rounded bg-gray-800 hover:bg-pink-600 transition">
-            🛠 Maintenance
-          </a>
-        </li>
+        {links.map((link) => (
+          <li key={link.path}>
+            <Link
+              to={link.path}
+              className={`block px-4 py-2 rounded ${isActive(link.path)} hover:bg-pink-600 transition`}
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );
