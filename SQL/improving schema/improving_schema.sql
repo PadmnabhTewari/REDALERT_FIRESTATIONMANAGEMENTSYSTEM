@@ -175,6 +175,7 @@ CREATE TABLE Report (
   Action_Taken TEXT,
   Action_Date_Time DATETIME,
   Admin_ID INT,
+  Status ENUM('Pending', 'In Progress', 'Resolved') DEFAULT 'Pending',
   FOREIGN KEY (User_ID) REFERENCES User(User_ID),
   FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
@@ -254,6 +255,21 @@ BEGIN
   UPDATE FireStation
   SET Total_Vehicles = (SELECT COUNT(*) FROM FireStationVehicle WHERE Station_ID = OLD.Station_ID)
   WHERE Station_ID = OLD.Station_ID;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER insert_report_location
+BEFORE INSERT ON Report
+FOR EACH ROW
+BEGIN
+  -- Check if Pincode exists in ReportLocation
+  IF NOT EXISTS (SELECT 1 FROM ReportLocation WHERE Pincode = NEW.Pincode) THEN
+    INSERT INTO ReportLocation (Pincode, City, State)
+    VALUES (NEW.Pincode, NEW.City, NEW.State);
+  END IF;
 END//
 
 DELIMITER ;
