@@ -14,7 +14,6 @@ import Staff from "./pages/Staff";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
-import Inventory from "./pages/Inventory";
 import Maintenance from "./pages/Maintenance";
 import Supplier from "./pages/Suppliers";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
@@ -94,14 +93,6 @@ const AppContent = () => {
               element={
                 <ProtectedRoute allowedRoles={["admin"]}>
                   <AdminReport />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/inventory"
-              element={
-                <ProtectedRoute allowedRoles={["admin"]}>
-                  <Inventory />
                 </ProtectedRoute>
               }
             />

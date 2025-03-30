@@ -114,16 +114,16 @@ CREATE TABLE SupplierItem (
 );
 
 -- Inventory Table (depends on FireStation and Supplier)
-CREATE TABLE Inventory (
-  Inventory_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Item_Name VARCHAR(255) NOT NULL,
-  Quantity INT NOT NULL,
-  Station_ID INT,
-  Supplier_ID INT,
-  Last_Updated DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID),
-  FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID)
-);
+-- CREATE TABLE Inventory (
+--   Inventory_ID INT AUTO_INCREMENT PRIMARY KEY,
+--   Item_Name VARCHAR(255) NOT NULL,
+--   Quantity INT NOT NULL,
+--   Station_ID INT,
+--   Supplier_ID INT,
+--   Last_Updated DATETIME DEFAULT CURRENT_TIMESTAMP,
+--   FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID),
+--   FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID)
+-- );
 
 -- EquipmentUsage Table (depends on Inventory and Staff)
 CREATE TABLE EquipmentUsage (

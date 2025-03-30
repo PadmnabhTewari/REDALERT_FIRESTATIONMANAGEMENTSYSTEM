@@ -11,7 +11,7 @@ const vehicleRoutes = require("./routes/vehicleRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const supplierRoutes = require('./routes/supplierRoutes');
 const maintenanceRoutes = require('./routes/maintainanceRoutes');
-const inventoryRoutes = require('./routes/inventoryRoutes');
+
 
 dotenv.config();
 const app = express();
@@ -29,7 +29,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/fire-stations", fireStationRoutes);
 app.use('/api/suppliers', supplierRoutes);
 app.use('/api/maintenance', maintenanceRoutes);
-app.use('/api/inventory', inventoryRoutes);
+
 
 const PORT = 5000;
 app.listen(PORT, () => {

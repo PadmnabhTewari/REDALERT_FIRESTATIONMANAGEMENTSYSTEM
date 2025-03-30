@@ -20,7 +20,6 @@ const Sidebar = () => {
     { path: '/admin/staff', label: '👨‍🚒 Staff' },
     { path: '/admin/reports', label: '📄 Reports' },
     { path: '/admin/suppliers', label: '📦 Suppliers' },
-    { path: '/admin/inventory', label: '🗃 Inventory' },
     { path: '/admin/maintenance', label: '🛠 Maintenance' },
   ];
 
