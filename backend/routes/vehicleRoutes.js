@@ -6,9 +6,12 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const [rows] = await pool.query(`
-      SELECT v.Vehicle_ID, vm.Type AS Model_Type, v.Status, v.Last_Maintenance_Date
+      SELECT v.Vehicle_ID, vm.Type AS Model_Type, v.Status, v.Last_Maintenance_Date,
+             fsv.Station_ID, fs.Name AS Station_Name
       FROM Vehicle v
       JOIN VehicleModel vm ON v.Model_ID = vm.Model_ID
+      LEFT JOIN FireStationVehicle fsv ON v.Vehicle_ID = fsv.Vehicle_ID
+      LEFT JOIN FireStation fs ON fsv.Station_ID = fs.Station_ID
     `);
     res.json(rows);
   } catch (error) {
@@ -32,7 +35,7 @@ router.get("/models", async (req, res) => {
 router.post("/", async (req, res) => {
   console.log("🚀 Vehicle request received:", req.body);
 
-  const { model_id, status, last_maintenance_date } = req.body;
+  const { model_id, status, last_maintenance_date, station_id } = req.body;
 
   if (!model_id || !status) {
     console.log("❌ Missing required fields");
@@ -55,10 +58,19 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Invalid vehicle model. Please add the model first." });
     }
 
+    // Insert into Vehicle table
     const [result] = await connection.query(
       "INSERT INTO Vehicle (Model_ID, Status, Last_Maintenance_Date) VALUES (?, ?, ?)",
       [model_id, status, last_maintenance_date || new Date()]
     );
+
+    // If station_id is provided, insert into FireStationVehicle junction table
+    if (station_id) {
+      await connection.query(
+        "INSERT INTO FireStationVehicle (Station_ID, Vehicle_ID) VALUES (?, ?)",
+        [station_id, result.insertId]
+      );
+    }
 
     await connection.commit();
     console.log("✅ Vehicle added to database, ID:", result.insertId);
