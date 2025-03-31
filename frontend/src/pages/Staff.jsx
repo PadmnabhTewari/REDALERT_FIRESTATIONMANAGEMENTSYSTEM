@@ -5,6 +5,7 @@ const API_URL = "http://localhost:5000/api/staff";
 
 const Staff = () => {
   const [staffList, setStaffList] = useState([]);
+  const [shiftFilter, setShiftFilter] = useState(""); // State for shift filter
   const [name, setName] = useState("");
   const [designation, setDesignation] = useState("");
   const [contact, setContact] = useState("");
@@ -17,11 +18,13 @@ const Staff = () => {
 
   useEffect(() => {
     fetchStaff();
-  }, []);
+  }, [shiftFilter]); // Refetch staff when shift filter changes
 
   const fetchStaff = async () => {
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get(API_URL, {
+        params: { shift: shiftFilter }, // Pass shift filter as query param
+      });
       setStaffList(response.data);
     } catch (error) {
       console.error("❌ Error fetching staff:", error);
@@ -98,11 +101,31 @@ const Staff = () => {
     setEditingId(null);
   };
 
+  const handleFilterChange = (e) => {
+    setShiftFilter(e.target.value); // Update shift filter state
+  };
+
   return (
     <div className="p-6 bg-gray-900 text-white min-h-screen">
       <h1 className="text-3xl font-bold mb-4 text-pink-400">👨‍🚒 Fire Station Staff</h1>
 
       {message && <p className="bg-gray-800 text-pink-300 p-2 rounded mb-4">{message}</p>}
+
+      {/* Filter by Shift */}
+      <div className="mb-6">
+        <label htmlFor="shiftFilter" className="text-pink-300 mr-2">Filter by Shift:</label>
+        <select
+          id="shiftFilter"
+          value={shiftFilter}
+          onChange={handleFilterChange}
+          className="px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-400"
+        >
+          <option value="">All Shifts</option>
+          <option value="Morning">Morning</option>
+          <option value="Evening">Evening</option>
+          <option value="Night">Night</option>
+        </select>
+      </div>
 
       {/* Staff Form */}
       <div className="bg-gray-800 shadow-lg rounded-lg p-4 mb-6">
@@ -236,7 +259,7 @@ const Staff = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="8" className="border-b px-4 py-2 text-center text-pink-300">
+                <td colSpan="9" className="border-b px-4 py-2 text-center text-pink-300">
                   No staff members found.
                 </td>
               </tr>

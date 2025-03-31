@@ -2,7 +2,8 @@ const Staff = require('../models/Staff');
 
 exports.getStaff = async (req, res) => {
   try {
-    const staff = await Staff.findAll();
+    const { shift } = req.query; // Get shift filter from query params
+    const staff = await Staff.findAll(shift); // Pass shift filter to model
     res.json(staff);
   } catch (error) {
     console.error('Error fetching staff:', error);

@@ -42,8 +42,8 @@ class Staff {
     }
   }
 
-  static async findAll() {
-    const [rows] = await db.query(`
+  static async findAll(shift) {
+    let query = `
       SELECT 
         s.Staff_ID,
         s.Name,
@@ -56,8 +56,17 @@ class Staff {
         ss.Shift_ID
       FROM Staff s
       JOIN StaffShift ss ON s.Staff_ID = ss.Staff_ID
-      ORDER BY ss.Shift_Date DESC
-    `);
+    `;
+    const params = [];
+
+    if (shift) {
+      query += ` WHERE ss.Shift = ?`;
+      params.push(shift);
+    }
+
+    query += ` ORDER BY ss.Shift_Date DESC`;
+
+    const [rows] = await db.query(query, params);
     return rows;
   }
 
