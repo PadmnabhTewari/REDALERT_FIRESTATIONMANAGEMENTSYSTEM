@@ -5,31 +5,73 @@ const router = express.Router();
 // Get all fire stations with complete location details
 router.get("/", async (req, res) => {
   try {
-    const [rows] = await pool.query(`
-      SELECT 
-        fs.Station_ID, 
-        fs.Name, 
-        fs.Contact_Number,
-        fs.Status,
-        fs.Establishment_Date,
-        fs.Capacity,
-        sl.Street_Address,
-        sl.Landmark,
-        sl.Latitude,
-        sl.Longitude,
-        pm.City,
-        pm.State,
-        pm.Pincode,
-        (SELECT COUNT(*) FROM Staff s WHERE s.Station_ID = fs.Station_ID) AS Total_Staff,
-        (SELECT COUNT(*) FROM FireStationVehicle fsv WHERE fsv.Station_ID = fs.Station_ID) AS Total_Vehicles,
-        GROUP_CONCAT(DISTINCT fsc.Contact_Value) AS Additional_Contacts
-      FROM FireStation fs
-      JOIN StationLocation sl ON fs.Location_ID = sl.Location_ID
-      JOIN PincodeMapping pm ON sl.Pincode = pm.Pincode
-      LEFT JOIN FireStationContact fsc ON fs.Station_ID = fsc.Station_ID
-      GROUP BY fs.Station_ID
-      ORDER BY fs.Name
-    `);
+    const { sortBy = 'Name', sortOrder = 'ASC' } = req.query;
+    
+    // Validate sort parameters
+    const validSortFields = ['Name', 'Total_Staff', 'Total_Vehicles'];
+    if (!validSortFields.includes(sortBy)) {
+      return res.status(400).json({ error: "Invalid sort field" });
+    }
+    if (!['ASC', 'DESC'].includes(sortOrder)) {
+      return res.status(400).json({ error: "Invalid sort order" });
+    }
+
+    let orderByClause;
+    switch(sortBy) {
+      case 'Name':
+        orderByClause = 'fs.Name';
+        break;
+      case 'Total_Staff':
+        orderByClause = '(SELECT COUNT(*) FROM Staff s WHERE s.Station_ID = fs.Station_ID)';
+        break;
+      case 'Total_Vehicles':
+        orderByClause = '(SELECT COUNT(*) FROM FireStationVehicle fsv WHERE fsv.Station_ID = fs.Station_ID)';
+        break;
+      default:
+        orderByClause = 'fs.Name';
+    }
+
+    const query = `
+      SELECT * FROM (
+        SELECT 
+          fs.Station_ID, 
+          fs.Name, 
+          fs.Contact_Number,
+          fs.Status,
+          fs.Establishment_Date,
+          fs.Capacity,
+          sl.Street_Address,
+          sl.Landmark,
+          sl.Latitude,
+          sl.Longitude,
+          pm.City,
+          pm.State,
+          pm.Pincode,
+          (SELECT COUNT(*) FROM Staff s WHERE s.Station_ID = fs.Station_ID) AS Total_Staff,
+          (SELECT COUNT(*) FROM FireStationVehicle fsv WHERE fsv.Station_ID = fs.Station_ID) AS Total_Vehicles,
+          GROUP_CONCAT(DISTINCT fsc.Contact_Value) AS Additional_Contacts
+        FROM FireStation fs
+        JOIN StationLocation sl ON fs.Location_ID = sl.Location_ID
+        JOIN PincodeMapping pm ON sl.Pincode = pm.Pincode
+        LEFT JOIN FireStationContact fsc ON fs.Station_ID = fsc.Station_ID
+        GROUP BY fs.Station_ID
+      ) AS derived_table
+      ORDER BY 
+        CASE 
+          WHEN ? = 'Name' THEN Name
+          WHEN ? = 'Total_Staff' THEN CAST(Total_Staff AS SIGNED)
+          WHEN ? = 'Total_Vehicles' THEN CAST(Total_Vehicles AS SIGNED)
+        END ${sortOrder}
+    `;
+
+    console.log('Executing query with order by:', orderByClause, sortOrder);
+    const [rows] = await pool.query(query, [sortBy, sortBy, sortBy]);
+    console.log('Query executed successfully, returning', rows.length, 'rows');
+    console.log('First few rows:', rows.slice(0, 3).map(row => ({
+      name: row.Name,
+      staff: row.Total_Staff,
+      vehicles: row.Total_Vehicles
+    })));
     res.json(rows);
   } catch (error) {
     console.error("❌ Error fetching fire stations:", error);
