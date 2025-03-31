@@ -1,0 +1,32 @@
+// dot 12.1.0 on Linux 6.13.8-200.fc41.x86_64
+// SchemaSpy rev 590
+digraph "ReportLocation" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "ReportLocation" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">ReportLocation</TD></TR>
+      <TR><TD PORT="Pincode" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">Pincode</TD></TR>
+      <TR><TD PORT="City" COLSPAN="3" ALIGN="LEFT">City</TD></TR>
+      <TR><TD PORT="State" COLSPAN="3" ALIGN="LEFT">State</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">3 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/ReportLocation.html"
+    tooltip="ReportLocation"
+  ];
+}
