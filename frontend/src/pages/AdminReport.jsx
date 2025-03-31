@@ -8,18 +8,24 @@ const AdminReport = () => {
   const [statusUpdates, setStatusUpdates] = useState({});
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [severityFilter, setSeverityFilter] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("All"); // Add state for status filter
 
   useEffect(() => {
     fetchReports();
-  }, []);
+  }, [severityFilter, statusFilter]); // Refetch reports when filters change
 
   const fetchReports = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(API_URL, {
         headers: { Authorization: `Bearer ${token}` },
+        params: {
+          severity: severityFilter !== "All" ? severityFilter : undefined, // Send undefined for "All"
+          status: statusFilter !== "All" ? statusFilter : undefined, // Send undefined for "All"
+        },
       });
-      setReports(response.data);
+      setReports(response.data); // Update reports with filtered data
       setLoading(false);
     } catch (error) {
       console.error("❌ Error fetching reports:", error);
@@ -72,6 +78,32 @@ const AdminReport = () => {
       <h1 className="text-3xl font-bold mb-4 text-pink-400">🚨 Admin Reports</h1>
 
       {message && <p className="bg-gray-800 text-pink-300 p-2 rounded mb-4">{message}</p>}
+
+      <div className="mb-4">
+        <label className="text-pink-300 mr-2">Filter by Severity:</label>
+        <select
+          value={severityFilter}
+          onChange={(e) => setSeverityFilter(e.target.value)}
+          className="px-3 py-1 bg-gray-800 text-white border border-gray-600 rounded"
+        >
+          <option value="All">All</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+
+        <label className="text-pink-300 ml-4 mr-2">Filter by Status:</label>
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="px-3 py-1 bg-gray-800 text-white border border-gray-600 rounded"
+        >
+          <option value="All">All</option>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+        </select>
+      </div>
 
       {loading ? (
         <p className="text-pink-300 text-lg">Loading reports...</p>
