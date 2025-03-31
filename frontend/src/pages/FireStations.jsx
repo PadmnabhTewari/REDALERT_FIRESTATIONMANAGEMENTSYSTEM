@@ -5,6 +5,10 @@ const API_URL = "http://localhost:5000/api/fire-stations";
 
 const FireStations = () => {
   const [fireStations, setFireStations] = useState([]);
+  const [sortConfig, setSortConfig] = useState({
+    sortBy: 'Name',
+    sortOrder: 'ASC'
+  });
   const [formData, setFormData] = useState({
     name: "",
     contactNumber: "",
@@ -22,13 +26,26 @@ const FireStations = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    console.log('Sort config changed:', sortConfig);
     fetchFireStations();
-  }, []);
+  }, [sortConfig]);
 
   const fetchFireStations = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(API_URL);
+      console.log('Fetching with sort params:', sortConfig);
+      const response = await axios.get(API_URL, {
+        params: {
+          sortBy: sortConfig.sortBy,
+          sortOrder: sortConfig.sortOrder
+        }
+      });
+      console.log('Received sorted data:', response.data);
+      console.log('Sorting values:', response.data.map(station => ({
+        name: station.Name,
+        staff: station.Total_Staff,
+        vehicles: station.Total_Vehicles
+      })));
       setFireStations(response.data);
     } catch (error) {
       console.error("❌ Error fetching fire stations:", error);
@@ -36,6 +53,30 @@ const FireStations = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSort = (field) => {
+    console.log('Sorting by:', field);
+    setSortConfig(prev => {
+      const newConfig = {
+        sortBy: field,
+        sortOrder: prev.sortBy === field && prev.sortOrder === 'ASC' ? 'DESC' : 'ASC'
+      };
+      console.log('New sort config:', newConfig);
+      return newConfig;
+    });
+  };
+
+  const handleSortOrderChange = () => {
+    console.log('Changing sort order');
+    setSortConfig(prev => {
+      const newConfig = {
+        ...prev,
+        sortOrder: prev.sortOrder === 'ASC' ? 'DESC' : 'ASC'
+      };
+      console.log('New sort config:', newConfig);
+      return newConfig;
+    });
   };
 
   const handleInputChange = (e) => {
@@ -94,7 +135,27 @@ const FireStations = () => {
       )}
 
       <div className="bg-gray-800 shadow-lg rounded-lg p-4 mb-6">
-        <h2 className="text-xl font-semibold mb-2 text-pink-300">Registered Fire Stations</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold text-pink-300">Registered Fire Stations</h2>
+          <div className="flex items-center space-x-2">
+            <label className="text-pink-300">Sort by:</label>
+            <select
+              value={sortConfig.sortBy}
+              onChange={(e) => handleSort(e.target.value)}
+              className="px-3 py-1 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-400"
+            >
+              <option value="Name">Name</option>
+              <option value="Total_Staff">Staff Count</option>
+              <option value="Total_Vehicles">Vehicle Count</option>
+            </select>
+            <button
+              onClick={handleSortOrderChange}
+              className="px-3 py-1 border border-gray-600 rounded bg-gray-700 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-pink-400"
+            >
+              {sortConfig.sortOrder === 'ASC' ? '↑ Ascending' : '↓ Descending'}
+            </button>
+          </div>
+        </div>
         {isLoading ? (
           <div className="text-center py-4">Loading fire stations...</div>
         ) : (
@@ -103,12 +164,33 @@ const FireStations = () => {
               <thead>
                 <tr className="bg-gray-600 text-pink-300">
                   <th className="border-b px-4 py-2">ID</th>
-                  <th className="border-b px-4 py-2">Name</th>
+                  <th className="border-b px-4 py-2">
+                    <div className="flex items-center space-x-1">
+                      Name
+                      {sortConfig.sortBy === 'Name' && (
+                        <span>{sortConfig.sortOrder === 'ASC' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </th>
                   <th className="border-b px-4 py-2">Address</th>
                   <th className="border-b px-4 py-2">City/State</th>
                   <th className="border-b px-4 py-2">Contact</th>
-                  <th className="border-b px-4 py-2">Staff</th>
-                  <th className="border-b px-4 py-2">Vehicles</th>
+                  <th className="border-b px-4 py-2">
+                    <div className="flex items-center space-x-1">
+                      Staff
+                      {sortConfig.sortBy === 'Total_Staff' && (
+                        <span>{sortConfig.sortOrder === 'ASC' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </th>
+                  <th className="border-b px-4 py-2">
+                    <div className="flex items-center space-x-1">
+                      Vehicles
+                      {sortConfig.sortBy === 'Total_Vehicles' && (
+                        <span>{sortConfig.sortOrder === 'ASC' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </th>
                   <th className="border-b px-4 py-2">Status</th>
                 </tr>
               </thead>
