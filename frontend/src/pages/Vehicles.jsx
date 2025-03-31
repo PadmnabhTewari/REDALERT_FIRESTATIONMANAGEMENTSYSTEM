@@ -15,6 +15,7 @@ const Vehicles = () => {
   const [lastMaintenance, setLastMaintenance] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [sortOption, setSortOption] = useState(""); // Add state for sorting
 
   useEffect(() => {
     fetchVehicles();
@@ -24,13 +25,17 @@ const Vehicles = () => {
 
   const fetchVehicles = async () => {
     try {
-      const response = await axios.get(API_VEHICLES);
+      const response = await axios.get(`${API_VEHICLES}?sort=${sortOption}`);
       setVehicles(response.data);
     } catch (error) {
       console.error("❌ Error fetching vehicles:", error);
       setError("Failed to fetch vehicles");
     }
   };
+
+  useEffect(() => {
+    fetchVehicles();
+  }, [sortOption]);
 
   const fetchVehicleModels = async () => {
     try {
@@ -89,6 +94,19 @@ const Vehicles = () => {
 
       <div className="bg-gray-800 shadow-lg rounded-lg p-4">
         <h2 className="text-xl font-semibold mb-2 text-pink-300">Registered Vehicles</h2>
+        <div className="mb-4">
+          <label htmlFor="sort" className="text-pink-300 mr-2">Sort By:</label>
+          <select
+            id="sort"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            className="px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-400"
+          >
+            <option value="">Default</option>
+            <option value="maintenance_asc">Maintenance Date (Ascending)</option>
+            <option value="maintenance_desc">Maintenance Date (Descending)</option>
+          </select>
+        </div>
         <table className="min-w-full bg-gray-700 text-white border border-gray-700">
           <thead>
             <tr className="bg-gray-600 text-pink-300">
