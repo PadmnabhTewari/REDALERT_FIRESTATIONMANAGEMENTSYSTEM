@@ -279,6 +279,28 @@ BEGIN
   WHERE Station_ID = OLD.Station_ID;
 END//
 
+CREATE TRIGGER after_maintenance_insert
+AFTER INSERT ON Maintenance
+FOR EACH ROW
+BEGIN
+  UPDATE Vehicle
+  SET Last_Maintenance_Date = NEW.Date_Performed
+  WHERE Vehicle_ID = NEW.Vehicle_ID;
+END//
+
+CREATE TRIGGER prevent_duplicate_shift
+BEFORE INSERT ON StaffShift
+FOR EACH ROW
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM StaffShift 
+    WHERE Staff_ID = NEW.Staff_ID AND Shift_Date = NEW.Shift_Date
+  ) THEN
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'Staff member is already assigned to a shift on this date';
+  END IF;
+END//
+
 DELIMITER ;
 
 DELIMITER //
