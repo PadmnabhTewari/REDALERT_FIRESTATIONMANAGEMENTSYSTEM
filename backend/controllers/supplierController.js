@@ -22,7 +22,15 @@ exports.createSupplier = async (req, res) => {
 // Get all suppliers
 exports.getSuppliers = async (req, res) => {
   try {
-    const suppliers = await Supplier.findAll();
+    const { sortByTotalItems, order } = req.query;
+
+    let suppliers;
+    if (sortByTotalItems === 'true') {
+      suppliers = await Supplier.findAllSortedByTotalItems(order || 'ASC');
+    } else {
+      suppliers = await Supplier.findAll();
+    }
+
     res.json(suppliers);
   } catch (error) {
     console.error('Error fetching suppliers:', error);

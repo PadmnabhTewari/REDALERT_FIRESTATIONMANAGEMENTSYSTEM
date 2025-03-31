@@ -34,6 +34,25 @@ class Supplier {
     return rows;
   }
 
+  static async findAllSortedByTotalItems(order = 'ASC') {
+    const [rows] = await db.query(`
+      SELECT 
+        s.Supplier_ID,
+        s.Name,
+        s.Contact_Phone,
+        s.Email,
+        s.Address,
+        GROUP_CONCAT(DISTINCT i.Name) as Items,
+        COUNT(DISTINCT si.Item_ID) as Total_Items
+      FROM Supplier s
+      LEFT JOIN SupplierItem si ON s.Supplier_ID = si.Supplier_ID
+      LEFT JOIN Item i ON si.Item_ID = i.Item_ID
+      GROUP BY s.Supplier_ID
+      ORDER BY Total_Items ${order}
+    `);
+    return rows;
+  }
+
   static async findById(id) {
     const [rows] = await db.query(`
       SELECT 

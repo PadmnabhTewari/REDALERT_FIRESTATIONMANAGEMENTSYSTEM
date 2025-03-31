@@ -14,15 +14,16 @@ const SupplyTransaction = () => {
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const [sortOrder, setSortOrder] = useState('ASC');
 
   useEffect(() => {
     fetchSuppliers();
     fetchItems();
-  }, []);
+  }, [sortOrder]);
 
   const fetchSuppliers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/suppliers');
+      const response = await axios.get(`http://localhost:5000/api/suppliers?sortByTotalItems=true&order=${sortOrder}`);
       setSuppliers(response.data);
     } catch (error) {
       console.error("❌ Error fetching suppliers:", error);
@@ -33,12 +34,15 @@ const SupplyTransaction = () => {
   const fetchItems = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/items');
-      console.log('Items fetched:', response.data); // Debug log
       setItems(response.data);
     } catch (error) {
       console.error("❌ Error fetching items:", error);
       setError("Failed to fetch items");
     }
+  };
+
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value);
   };
 
   const handleChange = (e) => {
@@ -74,7 +78,6 @@ const SupplyTransaction = () => {
         setMessage("✅ Supply transaction added successfully!");
       }
       resetForm();
-      // Refresh the supplier to see updated items
       fetchSuppliers();
     } catch (error) {
       console.error("❌ Error saving supply transaction:", error);
@@ -98,7 +101,6 @@ const SupplyTransaction = () => {
       try {
         await axios.delete(`http://localhost:5000/api/suppliers/${supplierId}/items/${itemId}`);
         setMessage("✅ Supply transaction deleted successfully!");
-        // Refresh the supplier to see updated items
         fetchSuppliers();
       } catch (error) {
         console.error("❌ Error deleting supply transaction:", error);
@@ -125,6 +127,18 @@ const SupplyTransaction = () => {
 
       <div className="bg-gray-800 shadow-lg rounded-lg p-4">
         <h2 className="text-xl font-semibold mb-2 text-pink-300">Supply Transaction Records</h2>
+        <div className="mb-4">
+          <label htmlFor="sortOrder" className="text-pink-300 mr-2">Sort by Total Items:</label>
+          <select
+            id="sortOrder"
+            value={sortOrder}
+            onChange={handleSortChange}
+            className="px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-400"
+          >
+            <option value="ASC">Ascending</option>
+            <option value="DESC">Descending</option>
+          </select>
+        </div>
         <table className="min-w-full bg-gray-700 text-white border border-gray-700">
           <thead>
             <tr className="bg-gray-600 text-pink-300">
