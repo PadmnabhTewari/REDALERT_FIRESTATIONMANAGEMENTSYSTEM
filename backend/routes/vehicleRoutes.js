@@ -4,6 +4,15 @@ const router = express.Router();
 
 // Get all vehicles with model details
 router.get("/", async (req, res) => {
+  const { sort } = req.query; // Get the sort query parameter
+  let sortQuery = "";
+
+  if (sort === "maintenance_asc") {
+    sortQuery = "ORDER BY v.Last_Maintenance_Date ASC";
+  } else if (sort === "maintenance_desc") {
+    sortQuery = "ORDER BY v.Last_Maintenance_Date DESC";
+  }
+
   try {
     const [rows] = await pool.query(`
       SELECT v.Vehicle_ID, vm.Type AS Model_Type, v.Status, v.Last_Maintenance_Date,
@@ -12,6 +21,7 @@ router.get("/", async (req, res) => {
       JOIN VehicleModel vm ON v.Model_ID = vm.Model_ID
       LEFT JOIN FireStationVehicle fsv ON v.Vehicle_ID = fsv.Vehicle_ID
       LEFT JOIN FireStation fs ON fsv.Station_ID = fs.Station_ID
+      ${sortQuery}
     `);
     res.json(rows);
   } catch (error) {
