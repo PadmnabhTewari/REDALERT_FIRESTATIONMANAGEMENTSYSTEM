@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE_URL = "git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api";
+const API_BASE_URL = "https://redalert-firestationmanagementsystem-edy1.onrender.com/api";
 
 const UserReport = () => {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_URL = "git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/admin/reports";
+const API_URL = "https://redalert-firestationmanagementsystem-edy1.onrender.com/api/admin/reports";
 
 const AdminReport = () => {
   const [reports, setReports] = useState([]);

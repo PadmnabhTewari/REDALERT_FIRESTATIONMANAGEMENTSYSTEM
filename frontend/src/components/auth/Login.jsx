@@ -26,13 +26,13 @@ const Login = () => {
     e.preventDefault();
     try {
       if (isSignUp) {
-        const response = await axios.post('git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/auth/signup', formData);
+        const response = await axios.post('https://redalert-firestationmanagementsystem-edy1.onrender.com/api/auth/signup', formData);
         if (response.data.success) {
           setIsSignUp(false);
           setError('');
         }
       } else {
-        const response = await axios.post('git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/auth/signin', {
+        const response = await axios.post('https://redalert-firestationmanagementsystem-edy1.onrender.com/api/auth/signin', {
           username: formData.username,
           password: formData.password,
         });

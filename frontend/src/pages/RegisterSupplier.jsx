@@ -21,7 +21,7 @@ const RegisterSupplier = () => {
 
   const fetchSuppliers = async () => {
     try {
-      const response = await axios.get('git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/suppliers');
+      const response = await axios.get('https://redalert-firestationmanagementsystem-edy1.onrender.com/api/suppliers');
       setSuppliers(response.data);
     } catch (error) {
       console.error("❌ Error fetching suppliers:", error);
@@ -44,10 +44,10 @@ const RegisterSupplier = () => {
 
     try {
       if (editingId) {
-        await axios.put(`git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/suppliers/${editingId}`, formData);
+        await axios.put(`https://redalert-firestationmanagementsystem-edy1.onrender.com/api/suppliers/${editingId}`, formData);
         setMessage("✅ Supplier updated successfully!");
       } else {
-        await axios.post('git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/suppliers', formData);
+        await axios.post('https://redalert-firestationmanagementsystem-edy1.onrender.com/api/suppliers', formData);
         setMessage("✅ Supplier registered successfully!");
       }
       resetForm();
@@ -73,7 +73,7 @@ const RegisterSupplier = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this supplier?')) {
       try {
-        await axios.delete(`git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/suppliers/${id}`);
+        await axios.delete(`https://redalert-firestationmanagementsystem-edy1.onrender.com/api/suppliers/${id}`);
         setMessage("✅ Supplier deleted successfully!");
         fetchSuppliers();
       } catch (error) {
