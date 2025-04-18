@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_URL = "https://redalert-firestationmanagementsystem-edy1.onrender.com/api/staff";
+const API_URL = "http://localhost:5000/api/staff";
 
 const Staff = () => {
   const [staffList, setStaffList] = useState([]);

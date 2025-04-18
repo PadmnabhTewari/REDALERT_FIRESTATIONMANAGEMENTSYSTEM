@@ -23,7 +23,7 @@ const SupplyTransaction = () => {
 
   const fetchSuppliers = async () => {
     try {
-      const response = await axios.get(`https://redalert-firestationmanagementsystem-edy1.onrender.com/api/suppliers?sortByTotalItems=true&order=${sortOrder}`);
+      const response = await axios.get(`http://localhost:5000/api/suppliers?sortByTotalItems=true&order=${sortOrder}`);
       setSuppliers(response.data);
     } catch (error) {
       console.error("❌ Error fetching suppliers:", error);
@@ -33,7 +33,7 @@ const SupplyTransaction = () => {
 
   const fetchItems = async () => {
     try {
-      const response = await axios.get('https://redalert-firestationmanagementsystem-edy1.onrender.com/api/items');
+      const response = await axios.get('http://localhost:5000/api/items');
       setItems(response.data);
     } catch (error) {
       console.error("❌ Error fetching items:", error);
@@ -66,12 +66,12 @@ const SupplyTransaction = () => {
     try {
       if (editingId) {
         const [supplierId, itemId] = editingId.split('-');
-        await axios.put(`https://redalert-firestationmanagementsystem-edy1.onrender.com/api/suppliers/${supplierId}/items/${itemId}`, {
+        await axios.put(`http://localhost:5000/api/suppliers/${supplierId}/items/${itemId}`, {
           Price: formData.Price
         });
         setMessage("✅ Supply transaction updated successfully!");
       } else {
-        await axios.post(`https://redalert-firestationmanagementsystem-edy1.onrender.com/api/suppliers/${formData.Supplier_ID}/items`, {
+        await axios.post(`http://localhost:5000/api/suppliers/${formData.Supplier_ID}/items`, {
           Item_ID: formData.Item_ID,
           Price: formData.Price
         });
@@ -99,7 +99,7 @@ const SupplyTransaction = () => {
   const handleDelete = async (supplierId, itemId) => {
     if (window.confirm('Are you sure you want to delete this supply transaction?')) {
       try {
-        await axios.delete(`https://redalert-firestationmanagementsystem-edy1.onrender.com/api/suppliers/${supplierId}/items/${itemId}`);
+        await axios.delete(`http://localhost:5000/api/suppliers/${supplierId}/items/${itemId}`);
         setMessage("✅ Supply transaction deleted successfully!");
         fetchSuppliers();
       } catch (error) {
