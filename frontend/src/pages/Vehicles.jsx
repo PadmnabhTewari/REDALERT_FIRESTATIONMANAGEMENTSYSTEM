@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_VEHICLES = "http://localhost:5000/api/vehicles";
-const API_MODELS = "http://localhost:5000/api/vehicles/models";
-const API_STATIONS = "http://localhost:5000/api/fire-stations/dropdown";
+const API_VEHICLES = "git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/vehicles";
+const API_MODELS = "git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/vehicles/models";
+const API_STATIONS = "git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/fire-stations/dropdown";
 
 const Vehicles = () => {
   const [vehicles, setVehicles] = useState([]);

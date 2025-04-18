@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = "git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/auth";
 
 const Login = () => {
   const [userName, setUserName] = useState("");

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/dashboard";
+const API_URL = "git@github.com:MEET2231/REDALERT_FIRESTATIONMANAGEMENTSYSTEM.git/api/dashboard";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
