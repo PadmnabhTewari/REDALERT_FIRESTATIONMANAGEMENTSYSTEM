@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const API_URL = "http://localhost:5000/api/dashboard";
-// http://localhost:5000
-// https://redalert-firestationmanagementsystem-edy1.onrender.com
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
