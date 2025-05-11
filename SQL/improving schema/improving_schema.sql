@@ -113,29 +113,6 @@ CREATE TABLE SupplierItem (
   FOREIGN KEY (Item_ID) REFERENCES Item(Item_ID) ON DELETE CASCADE
 );
 
--- Inventory Table (depends on FireStation and Supplier)
--- CREATE TABLE Inventory (
---   Inventory_ID INT AUTO_INCREMENT PRIMARY KEY,
---   Item_Name VARCHAR(255) NOT NULL,
---   Quantity INT NOT NULL,
---   Station_ID INT,
---   Supplier_ID INT,
---   Last_Updated DATETIME DEFAULT CURRENT_TIMESTAMP,
---   FOREIGN KEY (Station_ID) REFERENCES FireStation(Station_ID),
---   FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID)
--- );
-
--- EquipmentUsage Table (depends on Inventory and Staff)
-CREATE TABLE EquipmentUsage (
-  Usage_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Inventory_ID INT,
-  Used_Quantity INT NOT NULL,
-  Date_Used DATETIME DEFAULT CURRENT_TIMESTAMP,
-  Purpose VARCHAR(255) NOT NULL,
-  Staff_ID INT,
-  FOREIGN KEY (Inventory_ID) REFERENCES Inventory(Inventory_ID),
-  FOREIGN KEY (Staff_ID) REFERENCES Staff(Staff_ID)
-);
 
 -- User Table (independent)
 CREATE TABLE User (
